@@ -1,4 +1,20 @@
 {
+    "name": "exactquery/xq-select",
+    "description": "Cross browser <select> implementation using CSS, JQuery, and Twitter Bootstrap.",
+    "keywords": [
+        "bootstrap",
+        "select",
+        "replacement"
+    ],
+    "homepage": "https://github.com/exactquery/xq-select",
+    "version": "1.0",
+    "authors": [
+        {
+            "name": "AMJones",
+            "homepage": "https://github.com/exactquery"
+        }
+    ],
+    "license": "MIT",
     "require": {
         "twbs/bootstrap": "^3.3",
         "components/jquery": "^2.1"
