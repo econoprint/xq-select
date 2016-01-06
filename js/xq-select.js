@@ -64,7 +64,7 @@ $( document ).ready( function () {
             } );
             $select.addClass( 'xq-select-enabled' );
             $wrapper.on( 'click','.xq-select-item', function() { base.onClick(this); } );
-            $wrapper.append( $(base.option.templateFauxButton) );
+            $wrapper.append( $(base.options.templateFauxButton) );
             $wrapper.append( $dropdown );
         };
 
