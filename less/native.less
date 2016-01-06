@@ -1,0 +1,80 @@
+
+/* This is the native select, we're making everything but the text invisible so we can see the button styles in the wrapper */
+.xq-select select {
+  width:100%;
+  margin:0;
+  box-shadow: none;
+  background:none;
+  border: 1px solid transparent;
+  outline: none;
+  /* Prefixed box-sizing rules necessary for older browsers */
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  /* Remove select styling */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  /* Font size must the 16px or larger to prevent iOS page zoom on focus */
+  font-size:1em;
+  .has-warning &, .has-error &, .required &, .has-success & {
+    border-color: transparent !important;
+  }
+  &[disabled], &[readonly], fieldset[disabled] & {
+    background-color: @input-bg-disabled;
+    opacity: 1; // iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655
+  }
+  &[disabled], fieldset[disabled] & {
+    cursor: @cursor-disabled;
+  }
+  option {
+    //display: none !important;
+    padding: 6px 12px;
+    color: @input-color;
+    text-shadow: none;
+    span {
+      color: @text-muted;
+      text-shadow: none;
+    }
+    &[disabled] {
+      cursor: @cursor-disabled;
+      color: @gray-light;
+      opacity: 1; // iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655
+    }
+  }
+  optgroup {
+    //display: none !important;
+    border-top: 1px solid @input-border;
+    color: darken(@input-color, 15%);
+    padding: 6px 12px;
+    margin: 0;
+    text-shadow: none;
+    option {
+      margin: 0px -12px;
+      padding: 6px 12px;
+      &:first-child {
+        margin-top: 3px;
+      }
+    }
+  }
+}
+
+/* Focus style */
+.xq-select select:focus {
+  outline:none;
+  box-shadow: none;
+  background-color:transparent;
+  color: #222;
+  border:1px solid transparent;
+}
+
+/* Automatic Fallback if Using Modernizr or xqDetect */
+.no-js {
+  .xq-select {
+    select {
+      option, optgroup {
+        display: block !important;
+      }
+    }
+  }
+}

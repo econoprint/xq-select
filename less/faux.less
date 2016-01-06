@@ -1,0 +1,128 @@
+
+// Container used for styling the custom select, the button class below adds the bg gradient, corners, etc.
+.xq-select {
+  position: relative;
+  display:block;
+  padding:0;
+  border: 1px solid @input-border;
+  background-color: @input-bg;
+  &:hover {
+    border-color: darken(@input-border, 10%);
+  }
+  .required & {
+    border-color: rgba(66, 139, 202, 0.3);
+    &:hover {
+      border-color: rgba(66, 139, 202, 0.6);
+    }
+  }
+  .has-error & {
+    border-color: @brand-danger;
+    &:hover {
+      border-color: darken(@brand-danger, 10%);
+    }
+  }
+  .has-warning & {
+    border-color: @brand-warning;
+    &:hover {
+      border-color: darken(@brand-warning, 10%);
+    }
+  }
+  .has-success & {
+    border-color: @brand-success;
+    &:hover {
+      border-color: darken(@brand-success, 10%);
+    }
+  }
+}
+
+.xq-select::after {
+  display: inline-block;
+  font-size: inherit;
+  font-family: sans-serif;
+  content: "\0025BE";
+  background-color: transparent;
+  border-left: 1px solid @input-border;
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  bottom: 0;
+  padding: 10px;
+  z-index: 2;
+  /* This hack make the select behind the arrow clickable in some browsers */
+  pointer-events:none;
+  .required & {
+    border-left-color: rgba(66, 139, 202, 0.3);
+  }
+  .has-error & {
+    border-left-color: @brand-danger;
+    color: @brand-danger;
+  }
+  .has-warning & {
+    border-left-color: @brand-warning;
+    color: @brand-warning;
+  }
+  .has-success & {
+    border-left-color: @brand-success;
+    color: @brand-success;
+  }
+}
+
+.xq-select button {
+  // The clickable, semi-invisible button for opening dropdown
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: transparent;
+}
+
+// Formatting for Faux Selects
+.xq-select-dropdown {
+  background-color: @input-bg;
+  color: @input-color;
+  border-color: @input-border-focus;
+  // Occupy same space as select
+  min-width: 100% !important;
+  max-width: 100% !important;
+  // Don't grow so big as to overlap navigation
+  max-height: 300px;
+  // Scroll properly if too big
+  overflow-y: auto;
+  overflow-x:hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  // Stay above other items
+  z-index: @zindex-select-dropdown;
+  & > li > a {
+    cursor: pointer;
+    & span {
+      color: @text-muted;
+      margin-left: 10px;
+      text-shadow: none;
+    }
+  }
+  // optgroup display
+  .optgroup {
+    color: darken(@input-color, 15%);
+    font-weight: normal;
+    text-shadow: none;
+    padding: 6px 20px 3px 20px;
+    border-top: 1px solid @gray-light !important;
+  }
+  .xq-select-item {
+    &.selected::before {
+      display: inline-block;
+      font-size: inherit;
+      font-family: sans-serif;
+      content: "\002713";
+      background-color: transparent;
+      position: relative;
+      margin-left: -15px;
+      margin-right: 5px;
+    }
+    &.disabled {
+      color: @gray-light;
+      cursor: not-allowed;
+    }
+  }
+}
