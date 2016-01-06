@@ -1,7 +1,4 @@
-@import (reference) "../vendor/twbs/bootstrap/less/variables";
-
-// Variables
-@zindex-select-dropdown: @zindex-modal + 10; // must be higher than a modal background (1050)
+@import (reference) "variables.less";
 
 // Container used for styling the custom select, the button class below adds the bg gradient, corners, etc.
 .xq-select {
@@ -60,8 +57,15 @@
   .has-warning &, .has-error &, .required &, .has-success & {
     border-color: transparent !important;
   }
+  &[disabled], &[readonly], fieldset[disabled] & {
+    background-color: @input-bg-disabled;
+    opacity: 1; // iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655
+  }
+  &[disabled], fieldset[disabled] & {
+    cursor: @cursor-disabled;
+  }
   option {
-    display: none !important;
+    //display: none !important;
     padding: 6px 12px;
     color: @input-color;
     text-shadow: none;
@@ -69,14 +73,25 @@
       color: @text-muted;
       text-shadow: none;
     }
+    &[disabled] {
+      cursor: @cursor-disabled;
+      color: @gray-light;
+      opacity: 1; // iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655
+    }
   }
   optgroup {
-    display: none !important;
+    //display: none !important;
+    border-top: 1px solid @input-border;
     color: darken(@input-color, 15%);
     padding: 6px 12px;
+    margin: 0;
     text-shadow: none;
     option {
-      padding: 6px 8px;
+      margin: 0px -12px;
+      padding: 6px 12px;
+      &:first-child {
+        margin-top: 3px;
+      }
     }
   }
 }
@@ -158,7 +173,7 @@
   }
   // optgroup display
   .optgroup {
-    color: @gray-light;
+    color: darken(@input-color, 15%);
     font-weight: normal;
     text-shadow: none;
     padding: 6px 20px 3px 20px;
@@ -174,6 +189,10 @@
       position: relative;
       margin-left: -15px;
       margin-right: 5px;
+    }
+    &.disabled {
+      color: @gray-light;
+      cursor: not-allowed;
     }
   }
 }
