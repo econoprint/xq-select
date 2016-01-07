@@ -38,12 +38,14 @@ $( document ).ready( function () {
             var $select = $(select);
             var $wrapper  = $select.parents( base.options.wrapper );
             var $dropdown = $( base.options.templateFauxSelect );
+            var $button = $(base.options.templateFauxButton);
+            var tabIndex = (typeof $select.attr( 'tabindex' ) != 'undefined') ? $select.attr('tabindex') : 0;
             var target    = $select.prop('id');
             if ( typeof target == 'undefined' ) {
                 target = 'xqSelect' + index;
                 $select.attr( 'id', target );
             }
-            $wrapper.off( 'click', '.xq-select-item' );
+            $wrapper.off();
             $wrapper.find( '.xq-select-dropdown' ).remove();
             $wrapper.find( 'button' ).remove();
             var opts = $select.children();
@@ -62,9 +64,13 @@ $( document ).ready( function () {
                     });
                 }
             } );
-            $select.addClass( 'xq-select-enabled' );
+            $button.attr( 'tabindex', tabIndex );
+            $select.addClass( 'xq-select-enabled' ).attr( 'tabindex', '-1' );
+            $wrapper.on( 'shown.bs.dropdown', function() { base.onOpen(this); } );
+            $wrapper.on( 'keydown', '.xq-select-dropdown', function(e) { if( e.which == 9 ) { base.closeDropDown(this); } } );
+            $wrapper.on( 'keydown', '.xq-select-item', function(e) { base.onKeyDown( e, this); } );
             $wrapper.on( 'click','.xq-select-item', function() { base.onClick(this); } );
-            $wrapper.append( $(base.options.templateFauxButton) );
+            $wrapper.append( $button );
             $wrapper.append( $dropdown );
         };
 
@@ -93,11 +99,12 @@ $( document ).ready( function () {
          */
         base.CreateOption = function($optObj, target) {
             // Basics
-            var $ddLink = $( '<a></a>' );
+            var index = $optObj.index('#' + target + ' option');
+            var $ddLink = $( '<a tabindex="' + index + '"></a>' );
             var $ddItem = $( '<li></li>' );
             $ddLink.attr( 'data-value', $optObj.val() );
             $ddLink.attr( 'data-target', '#' + target );
-            $ddLink.attr( 'data-index', $optObj.index('#' + target + ' option') );
+            $ddLink.attr( 'data-index', index );
             $ddLink.addClass( 'xq-select-item' );
             if($optObj.prop('selected')) {
                 $ddLink.addClass( 'selected' );
@@ -136,10 +143,47 @@ $( document ).ready( function () {
          */
         base.onClick = function(obj) {
             var target = $( obj ).attr( 'data-target' );
-            $( target ).val( $( obj ).attr( 'data-value' ) );
-            $( base.options.fauxOption ).removeClass( 'selected' );
-            $( obj ).addClass( 'selected' );
-            $(target).trigger('change');
+            if(!$(obj ).hasClass('disabled')) {
+                $( target ).val( $( obj ).attr( 'data-value' ) );
+                $( base.options.fauxOption ).removeClass( 'selected' );
+                $( obj ).addClass( 'selected' );
+                $(target).trigger('change');
+            }
+            $( obj ).parents('.xq-select-dropdown' ).prev( '.dropdown-toggle' ).focus();
+        };
+
+        /**
+         * Called when a key is pressed while a faux select option is in focus.
+         *
+         * @param e       The event that triggered this.
+         * @param obj     The faux select option (li > a).
+         */
+        base.onKeyDown = function(e,obj) {
+            var key = e.which;
+            if(key == 13) {
+                e.preventDefault();
+                $( obj ).click();
+            }
+        };
+
+        /**
+         * Focuses on the currently selected item.  Called when a faux select is opened.
+         *
+         * @param obj The faux select object (ul)
+         */
+        base.onOpen = function(obj) {
+            $( obj ).find('.xq-select-item.selected' ).focus();
+        };
+
+        /**
+         * Closes the dropdown for the given object. Called when the TAB key is pressed with a faux select in focus.
+         * This is used instead of the dropdown('toggle') method because that seems to mess with other events.
+         *
+         * @param obj The faux select object (ul)
+         */
+        base.closeDropDown = function(obj) {
+            $( obj ).parent( base.options.wrapper ).removeClass( 'open' );
+            $( obj ).prev( '.dropdown-toggle' ).attr( 'aria-expanded', false );
         };
 
         // Run initializer
@@ -149,16 +193,17 @@ $( document ).ready( function () {
     };
 
     $.fn.xqselect.defaultOptions = {
-        fauxOption: '.xq-select-item',
-        trigger : '.xq-select > select',
-        wrapper      : '.xq-select',
-        templateFauxSelect: '<ul class="dropdown-menu xq-select-dropdown"></ul>',
-        templateFauxButton: '<button type="button" class="btn dropdown-toggle" data-toggle="dropdown">&nbsp;</button>'
+        fauxOption:         '.xq-select-item',
+        trigger:            '.xq-select > select',
+        wrapper:            '.xq-select',
+        templateFauxSelect: '<ul class="dropdown-menu xq-select-dropdown" role="menu"></ul>',
+        templateFauxButton: '<button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&nbsp;</button>'
     };
 })(jQuery);
 
 /**
- * Credit to Zoltán Tamási - http://stackoverflow.com/questions/21232685/bootstrap-drop-down-menu-auto-dropup-according-to-screen-position
+ * Credit to Zoltán Tamási -
+ * http://stackoverflow.com/questions/21232685/bootstrap-drop-down-menu-auto-dropup-according-to-screen-position
  */
 $(document).on("shown.bs.dropdown", ".xq-select", function () {
     // calculate the required sizes, spaces
