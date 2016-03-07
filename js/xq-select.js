@@ -21,10 +21,13 @@ $( document ).ready( function () {
         base.init = function(sel){
 
             base.options = $.extend({},$.fn.xqselect.defaultOptions, options);
+            base.$all = $(sel);
 
-            $( sel ).each( function ( index ) {
-                base.RenderSelect(this, index);
-            } );
+            if(base.$all.length <= base.options.fauxLimit) {
+                base.$all.each( function ( index ) {
+                    base.RenderSelect(this, index);
+                } );
+            }
 
         };
 
@@ -208,7 +211,8 @@ $( document ).ready( function () {
         trigger:            '.xq-select > select',
         wrapper:            '.xq-select',
         templateFauxSelect: '<ul class="dropdown-menu xq-select-dropdown" role="menu"></ul>',
-        templateFauxButton: '<button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&nbsp;</button>'
+        templateFauxButton: '<button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&nbsp;</button>',
+        fauxLimit:          20
     };
 })(jQuery);
 
