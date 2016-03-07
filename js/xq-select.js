@@ -108,6 +108,8 @@ $( document ).ready( function () {
             var index = $optObj.index('#' + target + ' option');
             var $ddLink = $( '<a tabindex="' + index + '"></a>' );
             var $ddItem = $( '<li></li>' );
+            var ddText = $optObj.text() || '&nbsp;';
+            $ddLink.text( ddText );
             $ddLink.attr( 'data-value', $optObj.val() );
             $ddLink.attr( 'data-target', '#' + target );
             $ddLink.attr( 'data-index', index );
@@ -115,7 +117,6 @@ $( document ).ready( function () {
             if($optObj.prop('selected')) {
                 $ddLink.addClass( 'selected' );
             }
-            $ddLink.text( $optObj.text() );
 
             // Disabled
             if($optObj.attr('disabled')) {
