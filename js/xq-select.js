@@ -38,7 +38,7 @@ $( document ).ready( function () {
 
             var $select = $(select);
             var $wrapper  = $select.parents( base.options.wrapper );
-            if( !base.isMobile() || !$wrapper.attr('data-mobile') == true ) {
+            if( $wrapper.attr('data-native') != 'true' && !(base.isMobile() || $wrapper.attr('data-mobile') == 'true' )) {
 
                 var $dropdown = $( base.options.templateFauxSelect );
                 var $button = $(base.options.templateFauxButton);
