@@ -3,7 +3,7 @@ $( document ).ready( function () {
 } );
 
 /**
- * xqSelect v1.0 (https://github.com/exactquery/xq-select)
+ * xqSelect v1.00.04 (https://github.com/exactquery/xq-select)
  *
  * @author  Aaron M Jones [aaron@jonesiscoding.com]
  * @licence MIT (https://github.com/exactquery/xq-select/blob/master/LICENSE)
@@ -222,8 +222,9 @@ $( document ).ready( function () {
  */
 $(document).on("shown.bs.dropdown", ".xq-select", function () {
     // calculate the required sizes, spaces
-    var $ul = $(this).children(".dropdown-menu");
-    var $button = $(this).children(".dropdown-toggle");
+    var $txqs = $(this);
+    var $ul = $txqs.children(".dropdown-menu");
+    var $button = $txqs.children(".dropdown-toggle");
     var ulOffset = $ul.offset();
     // how much space would be left on the top if the dropdown opened that direction
     var spaceUp = (ulOffset.top - $button.height() - $ul.height()) - $(window).scrollTop();
@@ -232,7 +233,7 @@ $(document).on("shown.bs.dropdown", ".xq-select", function () {
     // switch to dropup only if there is no space at the bottom AND there is space at the top, or there isn't either but
     // it would be still better fit
     if (spaceDown < 0 && (spaceUp >= 0 || spaceUp > spaceDown))
-        $(this).addClass("dropup");
+        $txqs.addClass("dropup");
 }).on("hidden.bs.dropdown", ".dropdown", function() {
     // always reset after close
     $(this).removeClass("dropup");
