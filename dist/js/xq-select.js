@@ -3,7 +3,7 @@ $( document ).ready( function () {
 } );
 
 /**
- * xqSelect v1.0 (https://github.com/exactquery/xq-select)
+ * xqSelect v1.00.04 (https://github.com/exactquery/xq-select)
  *
  * @author  Aaron M Jones [aaron@jonesiscoding.com]
  * @licence MIT (https://github.com/exactquery/xq-select/blob/master/LICENSE)
@@ -21,10 +21,13 @@ $( document ).ready( function () {
         base.init = function(sel){
 
             base.options = $.extend({},$.fn.xqselect.defaultOptions, options);
+            base.$all = $(sel);
 
-            $( sel ).each( function ( index ) {
-                base.RenderSelect(this, index);
-            } );
+            if(base.$all.length <= base.options.fauxLimit) {
+                base.$all.each( function ( index ) {
+                    base.RenderSelect(this, index);
+                } );
+            }
 
         };
 
@@ -38,7 +41,7 @@ $( document ).ready( function () {
 
             var $select = $(select);
             var $wrapper  = $select.parents( base.options.wrapper );
-            if( !base.isMobile() || !$wrapper.attr('data-mobile') == true ) {
+            if( $wrapper.attr('data-native') != 'true' && !(base.isMobile() || $wrapper.attr('data-mobile') == 'true' )) {
 
                 var $dropdown = $( base.options.templateFauxSelect );
                 var $button = $(base.options.templateFauxButton);
@@ -108,6 +111,8 @@ $( document ).ready( function () {
             var index = $optObj.index('#' + target + ' option');
             var $ddLink = $( '<a tabindex="' + index + '"></a>' );
             var $ddItem = $( '<li></li>' );
+            var ddText = $optObj.text() || '&nbsp;';
+            $ddLink.text( ddText );
             $ddLink.attr( 'data-value', $optObj.val() );
             $ddLink.attr( 'data-target', '#' + target );
             $ddLink.attr( 'data-index', index );
@@ -115,7 +120,6 @@ $( document ).ready( function () {
             if($optObj.prop('selected')) {
                 $ddLink.addClass( 'selected' );
             }
-            $ddLink.text( $optObj.text() );
 
             // Disabled
             if($optObj.attr('disabled')) {
@@ -207,7 +211,8 @@ $( document ).ready( function () {
         trigger:            '.xq-select > select',
         wrapper:            '.xq-select',
         templateFauxSelect: '<ul class="dropdown-menu xq-select-dropdown" role="menu"></ul>',
-        templateFauxButton: '<button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&nbsp;</button>'
+        templateFauxButton: '<button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&nbsp;</button>',
+        fauxLimit:          20
     };
 })(jQuery);
 
@@ -217,8 +222,9 @@ $( document ).ready( function () {
  */
 $(document).on("shown.bs.dropdown", ".xq-select", function () {
     // calculate the required sizes, spaces
-    var $ul = $(this).children(".dropdown-menu");
-    var $button = $(this).children(".dropdown-toggle");
+    var $txqs = $(this);
+    var $ul = $txqs.children(".dropdown-menu");
+    var $button = $txqs.children(".dropdown-toggle");
     var ulOffset = $ul.offset();
     // how much space would be left on the top if the dropdown opened that direction
     var spaceUp = (ulOffset.top - $button.height() - $ul.height()) - $(window).scrollTop();
@@ -227,7 +233,7 @@ $(document).on("shown.bs.dropdown", ".xq-select", function () {
     // switch to dropup only if there is no space at the bottom AND there is space at the top, or there isn't either but
     // it would be still better fit
     if (spaceDown < 0 && (spaceUp >= 0 || spaceUp > spaceDown))
-        $(this).addClass("dropup");
+        $txqs.addClass("dropup");
 }).on("hidden.bs.dropdown", ".dropdown", function() {
     // always reset after close
     $(this).removeClass("dropup");
