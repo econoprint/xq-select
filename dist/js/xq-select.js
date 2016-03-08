@@ -38,13 +38,13 @@ $( document ).ready( function () {
         base.RenderSelect = function(select, index) {
             var $select = $(select);
             var $wrapper  = $select.parents( base.options.wrapper );
-            if( $wrapper.attr('data-native') != 'true' && !(base.isMobile() && $wrapper.attr('data-mobile') == 'true' )) {
+            if( $wrapper.attr('data-native') !== 'true' && !(base.isMobile() && $wrapper.attr('data-mobile') === 'true' )) {
 
                 var $dropdown = $( base.options.templateFauxSelect );
                 var $button = $(base.options.templateFauxButton);
-                var tabIndex = (typeof $select.attr( 'tabindex' ) != 'undefined') ? $select.attr('tabindex') : 0;
+                var tabIndex = (typeof $select.attr( 'tabindex' ) !== 'undefined') ? $select.attr('tabindex') : 0;
                 var target    = $select.prop('id');
-                if ( typeof target == 'undefined' ) {
+                if ( typeof target === 'undefined' ) {
                     target = 'xqSelect' + index;
                     $select.attr( 'id', target );
                 }
@@ -54,10 +54,10 @@ $( document ).ready( function () {
                 var opts = $select.children();
                 opts.each( function () {
                     var $opt = $(this);
-                    if($opt.prop('tagName') == 'OPTION') {
+                    if($opt.prop('tagName') === 'OPTION') {
                         var $ddItem = base.CreateOption( $opt, target );
                         $dropdown.append( $ddItem );
-                    } else if($opt.prop('tagName') == 'OPTGROUP') {
+                    } else if($opt.prop('tagName') === 'OPTGROUP') {
                         var $groupItem = base.CreateOptGroup( $opt );
                         $dropdown.append( $groupItem );
                         var gOpts = $opt.children();
@@ -71,7 +71,7 @@ $( document ).ready( function () {
                 $button.attr( 'tabindex', tabIndex );
                 $select.addClass( 'xq-select-enabled' ).attr( 'tabindex', '-1' );
                 $wrapper.on( 'shown.bs.dropdown', function() { base.onOpen(this); } );
-                $wrapper.on( 'keydown', '.xq-select-dropdown', function(e) { if( e.which == 9 ) { base.closeDropDown(this); } } );
+                $wrapper.on( 'keydown', '.xq-select-dropdown', function(e) { if( e.which === 9 ) { base.closeDropDown(this); } } );
                 $wrapper.on( 'keydown', '.xq-select-item', function(e) { base.onKeyDown( e, this); } );
                 $wrapper.on( 'click','.xq-select-item', function() { base.onClick(this); } );
                 $wrapper.append( $button );
@@ -123,11 +123,11 @@ $( document ).ready( function () {
             }
 
             // Subtext
-            if(typeof $optObj.attr('data-original-text') != "undefined") {
+            if(typeof $optObj.attr('data-original-text') !== "undefined") {
                 $ddLink.text( $optObj.attr( 'data-original-text' ) );
             }
             var subText = $optObj.attr( 'data-subtext' );
-            if(typeof subText != "undefined") {
+            if(typeof subText !== "undefined") {
                 var $subText = $( '<span></span>' );
                 $subText.text( subText );
                 $ddLink.append( $subText );
@@ -151,7 +151,7 @@ $( document ).ready( function () {
          */
         base.OptionText = function($optObj) {
             var ddText = $optObj.text() || base.options.fauxOptionDefault;
-            if(ddText == base.options.fauxOptionDefault) {
+            if(ddText === base.options.fauxOptionDefault) {
                 $optObj.html( base.options.fauxOptionDefault );
             }
 
@@ -182,7 +182,7 @@ $( document ).ready( function () {
          */
         base.onKeyDown = function(e,obj) {
             var key = e.which;
-            if(key == 13) {
+            if(key === 13) {
                 e.preventDefault();
                 $( obj ).click();
             }
@@ -245,8 +245,9 @@ $(document).on("shown.bs.dropdown", ".xq-select", function () {
     var spaceDown = $(window).scrollTop() + $(window).height() - (ulOffset.top + $ul.height());
     // switch to dropup only if there is no space at the bottom AND there is space at the top, or there isn't either but
     // it would be still better fit
-    if (spaceDown < 0 && (spaceUp >= 0 || spaceUp > spaceDown))
+    if (spaceDown < 0 && (spaceUp >= 0 || spaceUp > spaceDown)) {
         $txqs.addClass("dropup");
+    }
 }).on("hidden.bs.dropdown", ".dropdown", function() {
     // always reset after close
     $(this).removeClass("dropup");
