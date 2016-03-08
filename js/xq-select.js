@@ -3,8 +3,7 @@ $( document ).ready( function () {
 } );
 
 /**
- * xqSelect v1.00.04 (https://github.com/exactquery/xq-select)
- *
+ * xqSelect v1.0.7 (https://github.com/exactquery/xq-select)
  * @author  Aaron M Jones [aaron@jonesiscoding.com]
  * @licence MIT (https://github.com/exactquery/xq-select/blob/master/LICENSE)
  */
@@ -19,7 +18,6 @@ $( document ).ready( function () {
          * @param sel   The selector for the object.
          */
         base.init = function(sel){
-
             base.options = $.extend({},$.fn.xqselect.defaultOptions, options);
             base.$all = $(sel);
 
@@ -38,10 +36,9 @@ $( document ).ready( function () {
          * @param index     The index of this select object within the HTML document.
          */
         base.RenderSelect = function(select, index) {
-
             var $select = $(select);
             var $wrapper  = $select.parents( base.options.wrapper );
-            if( $wrapper.attr('data-native') != 'true' && !(base.isMobile() || $wrapper.attr('data-mobile') == 'true' )) {
+            if( $wrapper.attr('data-native') != 'true' && !(base.isMobile() && $wrapper.attr('data-mobile') == 'true' )) {
 
                 var $dropdown = $( base.options.templateFauxSelect );
                 var $button = $(base.options.templateFauxButton);
@@ -111,8 +108,7 @@ $( document ).ready( function () {
             var index = $optObj.index('#' + target + ' option');
             var $ddLink = $( '<a tabindex="' + index + '"></a>' );
             var $ddItem = $( '<li></li>' );
-            var ddText = $optObj.text() || '&nbsp;';
-            $ddLink.text( ddText );
+            $ddLink.html( base.OptionText( $optObj ) );
             $ddLink.attr( 'data-value', $optObj.val() );
             $ddLink.attr( 'data-target', '#' + target );
             $ddLink.attr( 'data-index', index );
@@ -144,6 +140,22 @@ $( document ).ready( function () {
             // Put it together & return it
             $ddItem.append( $ddLink );
             return $ddItem;
+        };
+
+        /**
+         * Adds text to a faux select option.  In the case of an empty option, adds the default text to both
+         * the faux select and the native select.
+         *
+         * @param $optObj
+         * @returns {*|string}
+         */
+        base.OptionText = function($optObj) {
+            var ddText = $optObj.text() || base.options.fauxOptionDefault;
+            if(ddText == base.options.fauxOptionDefault) {
+                $optObj.html( base.options.fauxOptionDefault );
+            }
+
+            return ddText;
         };
 
         /**
@@ -197,7 +209,7 @@ $( document ).ready( function () {
         };
 
         base.isMobile = function() {
-            return true == (/(android|blackberry|bb10|mobile|iphone|ipad|ipod|opera mini|iemobile|windows phone)/i.test(navigator.userAgent));
+            return true === (/(android|blackberry|bb10|mobile|iphone|ipad|ipod|opera mini|iemobile|windows phone)/i.test(navigator.userAgent));
         };
 
         // Run initializer
@@ -212,7 +224,8 @@ $( document ).ready( function () {
         wrapper:            '.xq-select',
         templateFauxSelect: '<ul class="dropdown-menu xq-select-dropdown" role="menu"></ul>',
         templateFauxButton: '<button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&nbsp;</button>',
-        fauxLimit:          20
+        fauxLimit:          20,
+        fauxOptionDefault:  '--'
     };
 })(jQuery);
 
