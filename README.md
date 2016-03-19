@@ -73,7 +73,9 @@ The following browser are still expected to work:
 | Opera Mini | All | All | Needs Testing** |
 | Internet Explorer | All | Windows Phone | Needs Testing** |
 
-No intention is present to support IE7, Opera 10, Safari 4, or 'ancient' versions of self-updating browsers such as Firefox and Chrome. 
+No intention is present to support IE7, Opera 10, Safari 4, or 'ancient' versions of self-updating browsers such as Firefox and Chrome.  
+
+Mobile browsers are marked as *CSS Only* because their native selects should be used whenever possible to ensure the best user experience.  Ideally, CSS rules will still ensure that the ```<select>``` looks uniform across browsers, but when clicked the native select will take over.  See [usage](#usage-and-demo) above for how to make this happen.
 
 For additional browser compatibility, see [jQuery Browser Support](https://jquery.com/browser-support/) and [Bootstrap Supported Browsers](http://getbootstrap.com/getting-started/#support-browsers)
 
