@@ -1,3 +1,5 @@
+@import (reference) "../vendor/twbs/bootstrap/less/variables";
+@import (reference) "variables";
 
 // Container used for styling the custom select, the button class below adds the bg gradient, corners, etc.
 .xq-select {
@@ -33,12 +35,18 @@
       border-color: darken(@brand-success, 10%);
     }
   }
+  select {
+    /* Make sure the select is behind the faux select */
+    position: relative;
+    z-index: @zindex-select-native;
+  }
 }
 
 .xq-select::after {
   display: inline-block;
   font-size: inherit;
   font-family: sans-serif;
+  line-height: @line-height-base;
   content: "\0025BE";
   background-color: transparent;
   border-left: 1px solid @input-border;
@@ -46,8 +54,8 @@
   top: -1px;
   right: -1px;
   bottom: 0;
-  padding: 10px;
-  z-index: 2;
+  padding: @padding-xs-vertical @padding-xs-horizontal;
+  z-index: @zindex-select-arrow;
   /* This hack make the select behind the arrow clickable in some browsers */
   pointer-events:none;
   .required & {
@@ -74,6 +82,7 @@
   left: 0;
   width: 100%;
   background: transparent;
+  z-index: @zindex-select-button;
 }
 
 // Formatting for Faux Selects

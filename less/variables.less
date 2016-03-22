@@ -1,4 +1,7 @@
 @import (reference) "../vendor/twbs/bootstrap/less/variables";
 
 // Variables
-@zindex-select-dropdown: @zindex-modal + 10; // must be higher than a modal background (1050)
+@zindex-select-dropdown: @zindex-modal + 10;          // must be higher than a modal background (1050)
+@zindex-select-native:   1;                           // for the native select box to be behind the faux select
+@zindex-select-arrow:    @zindex-select-native + 1;   // for the arrow of the faux select to be above the native arrow
+@zindex-select-button:   @zindex-select-arrow + 1;    // for the button of the faux select to sit on top of it all
