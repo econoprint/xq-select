@@ -149,8 +149,11 @@ fieldset[disabled] .xq-select select {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  background: transparent;
+  bottom: 0;
+  right: 0;
+  background: #fff;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  opacity: 0.0;
   z-index: 3;
 }
 .xq-select-dropdown {
@@ -158,7 +161,9 @@ fieldset[disabled] .xq-select select {
   color: #555555;
   border-color: #66afe9;
   min-width: 100% !important;
-  max-width: 100% !important;
+  position: absolute;
+  left: -1px;
+  right: -1px;
   max-height: 300px;
   overflow-y: auto;
   overflow-x: hidden;
