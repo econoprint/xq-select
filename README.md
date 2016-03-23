@@ -50,7 +50,7 @@ As of this moment, it is expected that the following browsers are fully supporte
 | ------------- | ------------- | ------------- | ------------- |
 | Chrome  | ?* | Win/Mac/Linux | Supported |
 | Firefox | ?* | Win/Mac/Linux | Supported |
-| Opera | 15+ | Win/Mac/Linux | Needs Testing |
+| Opera | 15+ | Win/Mac/Linux | Supported |
 | Safari | 6.2+ | Mac | Supported |
 | Safari | iOS 8/9+ | iOS | CSS Only |
 | Chrome | iOS 8/9+ | iOS | CSS Only |
@@ -59,7 +59,7 @@ As of this moment, it is expected that the following browsers are fully supporte
 | Internet Explorer | 8 | Win | Supported |
 | Internet Explorer | 9/10 | Win | Supported |
 | Internet Explorer | 11 | Win | Supported |
-| Edge | ?* | Win | Supported |
+| Edge | All | Win | Supported |
 
 The following browser are still expected to work:
 
@@ -69,7 +69,7 @@ The following browser are still expected to work:
 | Opera | 10 | Win/Mac/Linux | Unsupported |
 | Safari  | 5.1.4+ | Mac | Needs Testing |
 | Safari | iOS 6.1 - 7 | iOS | Needs Testing** |
-| Android Browser | Android 5.0+ | Needs Testing** |
+| Android Browser | Android 5.0+ | Android | Needs Testing** |
 | Opera Mini | All | All | Needs Testing** |
 | Internet Explorer | All | Windows Phone | Needs Testing** |
 
