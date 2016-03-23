@@ -1,4 +1,4 @@
-/* This is the native select, we're making everything but the text invisible so we can see the button styles in the wrapper */
+// This is the native select, we're making everything but the text invisible so we can see the button styles in the wrapper
 .xq-select select {
   width:100%;
   margin:0;
@@ -6,15 +6,15 @@
   background:none;
   border: 1px solid transparent;
   outline: none;
-  /* Prefixed box-sizing rules necessary for older browsers */
+  // Prefixed box-sizing rules necessary for older browsers
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  /* Remove select styling */
+  // Remove select styling
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  /* Font size must the 16px or larger to prevent iOS page zoom on focus */
+  // Font size must the 16px or larger to prevent iOS page zoom on focus
   font-size:1em;
   .has-warning &, .has-error &, .required &, .has-success & {
     border-color: transparent !important;
@@ -58,7 +58,7 @@
   }
 }
 
-/* Focus style */
+// Focus style
 .xq-select select:focus {
   outline:none;
   box-shadow: none;
@@ -67,7 +67,7 @@
   border:1px solid transparent;
 }
 
-/* Automatic Fallback if Using Modernizr or xqDetect */
+// Automatic Fallback if Using Modernizr or xqDetect
 .no-js {
   .xq-select {
     select {

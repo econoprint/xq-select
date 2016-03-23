@@ -1,4 +1,8 @@
-/* This is the native select, we're making everything but the text invisible so we can see the button styles in the wrapper */
+/**
+ * xqSelect v1.0.8 (https://github.com/exactquery/xq-select)
+ * @author  Aaron M Jones [aaron@jonesiscoding.com]
+ * @licence MIT (https://github.com/exactquery/xq-select/blob/master/LICENSE)
+ */
 .xq-select select {
   width: 100%;
   margin: 0;
@@ -6,15 +10,12 @@
   background: none;
   border: 1px solid transparent;
   outline: none;
-  /* Prefixed box-sizing rules necessary for older browsers */
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  /* Remove select styling */
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  /* Font size must the 16px or larger to prevent iOS page zoom on focus */
   font-size: 1em;
 }
 .has-warning .xq-select select,
@@ -61,7 +62,6 @@ fieldset[disabled] .xq-select select {
 .xq-select select optgroup option:first-child {
   margin-top: 3px;
 }
-/* Focus style */
 .xq-select select:focus {
   outline: none;
   box-shadow: none;
@@ -69,7 +69,6 @@ fieldset[disabled] .xq-select select {
   color: #222;
   border: 1px solid transparent;
 }
-/* Automatic Fallback if Using Modernizr or xqDetect */
 .no-js .xq-select select option,
 .no-js .xq-select select optgroup {
   display: block !important;
@@ -109,7 +108,6 @@ fieldset[disabled] .xq-select select {
   border-color: #449d44;
 }
 .xq-select select {
-  /* Make sure the select is behind the faux select */
   position: relative;
   z-index: 1;
 }
@@ -127,7 +125,6 @@ fieldset[disabled] .xq-select select {
   bottom: 0;
   padding: 1px 5px;
   z-index: 2;
-  /* This hack make the select behind the arrow clickable in some browsers */
   pointer-events: none;
 }
 .required .xq-select::after {
@@ -203,16 +200,11 @@ fieldset[disabled] .xq-select select {
   color: #777777;
   cursor: not-allowed;
 }
-/* ------------------------------------  */
-/* START OF UGLY BROWSER-SPECIFIC HACKS */
-/* ----------------------------------  */
-/* OPERA - Pre-Blink nix the custom arrow, go with a native select button to keep it simple. Targeted via this hack http://browserhacks.com/#hack-a3f166304aafed524566bc6814e1d5c7 */
+/* Browser Hacks */
 x:-o-prefocus,
 .xq-select::after {
   display: none;
 }
-/* IE 10/11+ - This hides native dropdown button arrow so it will have the custom appearance, IE 9 and earlier get a native select - targeting media query hack via http://browserhacks.com/#hack-28f493d247a12ab654f6c3637f6978d5 - looking for better ways to achieve this targeting */
-/* The second rule removes the odd blue bg color behind the text in the select button in IE 10/11 and sets the text color to match the focus style's - fix via http://stackoverflow.com/questions/17553300/change-ie-background-color-on-unopened-focused-select-box */
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
   .xq-select select::-ms-expand {
     display: none;
@@ -222,11 +214,8 @@ x:-o-prefocus,
     color: #222;
   }
 }
-/* Firefox focus has odd artifacts around the text, this kills that. See https://developer.mozilla.org/en-US/docs/Web/CSS/:-moz-focusring */
 .xq-select select:-moz-focusring {
   color: transparent;
   text-shadow: 0 0 0 #000;
 }
-/* ------------------------------------  */
-/*  END OF UGLY BROWSER-SPECIFIC HACKS  */
-/* ------------------------------------  */
+/* Browser Hacks */

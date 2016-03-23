@@ -33,7 +33,7 @@
     }
   }
   select {
-    /* Make sure the select is behind the faux select */
+    // Make sure the select is behind the faux select
     position: relative;
     z-index: @zindex-select-native;
   }
@@ -53,7 +53,7 @@
   bottom: 0;
   padding: @padding-xs-vertical @padding-xs-horizontal;
   z-index: @zindex-select-arrow;
-  /* This hack make the select behind the arrow clickable in some browsers */
+  // This hack make the select behind the arrow clickable in some browsers
   pointer-events:none;
   .required & {
     border-left-color: rgba(66, 139, 202, 0.3);
