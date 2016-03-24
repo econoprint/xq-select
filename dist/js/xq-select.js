@@ -3,7 +3,7 @@ $( document ).ready( function () {
 } );
 
 /**
- * xqSelect v1.0.8 (https://github.com/exactquery/xq-select)
+ * xqSelect v1.0.9 (https://github.com/exactquery/xq-select)
  * @author  Aaron M Jones [aaron@jonesiscoding.com]
  * @licence MIT (https://github.com/exactquery/xq-select/blob/master/LICENSE)
  */
