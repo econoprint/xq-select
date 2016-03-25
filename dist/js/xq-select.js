@@ -20,13 +20,11 @@ $( document ).ready( function () {
         base.init = function(sel){
             base.options = $.extend({},$.fn.xqselect.defaultOptions, options);
             base.$all = $(sel);
-
             if(base.$all.length <= base.options.fauxLimit) {
                 base.$all.each( function ( index ) {
                     base.RenderSelect(this, index);
                 } );
             }
-
         };
 
         /**
@@ -37,9 +35,13 @@ $( document ).ready( function () {
          */
         base.RenderSelect = function(select, index) {
             var $select = $(select);
+            // Get the Wrapper and Remove xqSelect and Events
             var $wrapper  = $select.parents( base.options.wrapper );
+            $wrapper.off();
+            $wrapper.find( '.xq-select-dropdown' ).remove();
+            $wrapper.find( 'button' ).remove();
+            // Only add the faux select if we're supposed to
             if( $wrapper.attr('data-native') !== 'true' && !(base.isMobile() && $wrapper.attr('data-mobile') === 'true' )) {
-
                 var $dropdown = $( base.options.templateFauxSelect );
                 var $button = $(base.options.templateFauxButton);
                 var tabIndex = (typeof $select.attr( 'tabindex' ) !== 'undefined') ? $select.attr('tabindex') : 0;
@@ -48,26 +50,22 @@ $( document ).ready( function () {
                     target = 'xqSelect' + index;
                     $select.attr( 'id', target );
                 }
-                $wrapper.off();
-                $wrapper.find( '.xq-select-dropdown' ).remove();
-                $wrapper.find( 'button' ).remove();
                 var opts = $select.children();
                 opts.each( function () {
                     var $opt = $(this);
                     if($opt.prop('tagName') === 'OPTION') {
-                        var $ddItem = base.CreateOption( $opt, target );
+                        var $ddItem = base.CreateOption( $opt, target, ($select.selectedIndex || 0) );
                         $dropdown.append( $ddItem );
                     } else if($opt.prop('tagName') === 'OPTGROUP') {
                         var $groupItem = base.CreateOptGroup( $opt );
                         $dropdown.append( $groupItem );
                         var gOpts = $opt.children();
                         gOpts.each(function() {
-                            var $ddItem = base.CreateOption( $(this), target );
+                            var $ddItem = base.CreateOption( $(this), target, ( $select.selectedIndex || 0 ) );
                             $dropdown.append( $ddItem );
                         });
                     }
                 } );
-
                 $button.attr( 'tabindex', tabIndex );
                 $select.addClass( 'xq-select-enabled' ).attr( 'tabindex', '-1' );
                 $wrapper.on( 'shown.bs.dropdown', function() { base.onOpen(this); } );
@@ -101,28 +99,29 @@ $( document ).ready( function () {
          *
          * @param $optObj               The option from which to create the faux option.
          * @param target                The ID of the faux select dropdown.
+         * @param chosen                The selected option of the original dropdown
          * @returns {*|HTMLElement}     The faux option as a list item with an anchor.
          */
-        base.CreateOption = function($optObj, target) {
+        base.CreateOption = function($optObj, target, chosen) {
             // Basics
-            var index = $optObj.index('#' + target + ' option');
+            target = '#' + target;
+            var index = $optObj.index(target + ' option');
             var $ddLink = $( '<a tabindex="' + index + '"></a>' );
             var $ddItem = $( '<li></li>' );
             $ddLink.html( base.OptionText( $optObj ) );
             $ddLink.attr( 'data-value', $optObj.val() );
-            $ddLink.attr( 'data-target', '#' + target );
+            $ddLink.attr( 'data-target', target );
             $ddLink.attr( 'data-index', index );
             $ddLink.addClass( 'xq-select-item' );
-            if($optObj.prop('selected')) {
+            // Selected?
+            if( chosen == index || $optObj.attr('selected') ) {
                 $ddLink.addClass( 'selected' );
             }
-
-            // Disabled
+            // Disabled?
             if($optObj.attr('disabled')) {
                 $ddLink.addClass( 'disabled' );
             }
-
-            // Subtext
+            // Subtext?
             if(typeof $optObj.attr('data-original-text') !== "undefined") {
                 $ddLink.text( $optObj.attr( 'data-original-text' ) );
             }
@@ -136,9 +135,9 @@ $( document ).ready( function () {
                     $optObj.append( ' <span>(' + subText + ')</span>' );
                 }
             }
-
             // Put it together & return it
             $ddItem.append( $ddLink );
+
             return $ddItem;
         };
 
