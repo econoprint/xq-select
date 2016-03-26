@@ -3,7 +3,7 @@ $( document ).ready( function () {
 } );
 
 /**
- * xqSelect v1.0.9 (https://github.com/exactquery/xq-select)
+ * xqSelect v1.0.11 (https://github.com/exactquery/xq-select)
  * @author  Aaron M Jones [aaron@jonesiscoding.com]
  * @licence MIT (https://github.com/exactquery/xq-select/blob/master/LICENSE)
  */
@@ -54,18 +54,19 @@ $( document ).ready( function () {
                 opts.each( function () {
                     var $opt = $(this);
                     if($opt.prop('tagName') === 'OPTION') {
-                        var $ddItem = base.CreateOption( $opt, target, ($select.selectedIndex || 0) );
+                        var $ddItem = base.CreateOption( $opt, target );
                         $dropdown.append( $ddItem );
                     } else if($opt.prop('tagName') === 'OPTGROUP') {
                         var $groupItem = base.CreateOptGroup( $opt );
                         $dropdown.append( $groupItem );
                         var gOpts = $opt.children();
                         gOpts.each(function() {
-                            var $ddItem = base.CreateOption( $(this), target, ( $select.selectedIndex || 0 ) );
+                            var $ddItem = base.CreateOption( $(this), target);
                             $dropdown.append( $ddItem );
                         });
                     }
                 } );
+                $dropdown.find('a').eq($select.prop('selectedIndex')).addClass('selected');
                 $button.attr( 'tabindex', tabIndex );
                 $select.addClass( 'xq-select-enabled' ).attr( 'tabindex', '-1' );
                 $wrapper.on( 'shown.bs.dropdown', function() { base.onOpen(this); } );
@@ -99,10 +100,9 @@ $( document ).ready( function () {
          *
          * @param $optObj               The option from which to create the faux option.
          * @param target                The ID of the faux select dropdown.
-         * @param chosen                The selected option of the original dropdown
          * @returns {*|HTMLElement}     The faux option as a list item with an anchor.
          */
-        base.CreateOption = function($optObj, target, chosen) {
+        base.CreateOption = function($optObj, target) {
             // Basics
             target = '#' + target;
             var index = $optObj.index(target + ' option');
@@ -113,10 +113,6 @@ $( document ).ready( function () {
             $ddLink.attr( 'data-target', target );
             $ddLink.attr( 'data-index', index );
             $ddLink.addClass( 'xq-select-item' );
-            // Selected?
-            if( chosen == index || $optObj.attr('selected') ) {
-                $ddLink.addClass( 'selected' );
-            }
             // Disabled?
             if($optObj.attr('disabled')) {
                 $ddLink.addClass( 'disabled' );
@@ -163,14 +159,16 @@ $( document ).ready( function () {
          * @param obj
          */
         base.onClick = function(obj) {
-            var target = $( obj ).attr( 'data-target' );
-            if(!$(obj ).hasClass('disabled')) {
-                $( target ).val( $( obj ).attr( 'data-value' ) );
-                $( base.options.fauxOption ).removeClass( 'selected' );
-                $( obj ).addClass( 'selected' );
-                $(target).trigger('change');
+            var $obj = $( obj );
+            var $target = $($obj.attr( 'data-target' ));
+            var $dropdown = $obj.parents( '.xq-select-dropdown' ) ;
+            if(!$obj.hasClass('disabled')) {
+                $target.val( $obj.attr( 'data-value' ) );
+                $dropdown.find( base.options.fauxOption ).removeClass( 'selected' );
+                $obj.addClass( 'selected' );
+                $target.trigger('change');
             }
-            $( obj ).parents('.xq-select-dropdown' ).prev( '.dropdown-toggle' ).focus();
+            $obj.parents('.xq-select-dropdown' ).prev( '.dropdown-toggle' ).focus();
         };
 
         /**
