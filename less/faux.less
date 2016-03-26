@@ -1,17 +1,25 @@
+@import (reference) "variables.less";
+
 // Container used for styling the custom select, the button class below adds the bg gradient, corners, etc.
 .xq-select {
   position: relative;
-  display:block;
-  padding:0;
+  display: block;
+  padding: 0;
   border: 1px solid @input-border;
   background-color: @input-bg;
   &:hover {
     border-color: darken(@input-border, 10%);
   }
-  .required & {
-    border-color: rgba(66, 139, 202, 0.3);
+  select {
+    // Make sure the select is behind the faux select
+    position: relative;
+    z-index: @zindex-select-native;
+  }
+  // Contextual Borders
+  .has-required & {
+    border-color: @brand-required;
     &:hover {
-      border-color: rgba(66, 139, 202, 0.6);
+      border-color: darken(@brand-required, 10%);
     }
   }
   .has-error & {
@@ -32,19 +40,11 @@
       border-color: darken(@brand-success, 10%);
     }
   }
-  select {
-    // Make sure the select is behind the faux select
-    position: relative;
-    z-index: @zindex-select-native;
-  }
 }
 
 .xq-select::after {
-  display: inline-block;
-  font-size: inherit;
-  font-family: sans-serif;
-  line-height: @line-height-base;
-  content: "\0025BE";
+  @content: "caret-down";
+  .xq-select-icons(@icon-set, @content);
   background-color: transparent;
   border-left: 1px solid @input-border;
   position: absolute;
@@ -53,10 +53,11 @@
   bottom: 0;
   padding: @padding-xs-vertical @padding-xs-horizontal;
   z-index: @zindex-select-arrow;
-  // This hack make the select behind the arrow clickable in some browsers
+  // This hack make the select behind  the arrow clickable in some browsers
   pointer-events:none;
-  .required & {
-    border-left-color: rgba(66, 139, 202, 0.3);
+  // Contextual Borders
+  .has-required & {
+    border-left-color: @brand-required;
   }
   .has-error & {
     border-left-color: @brand-danger;
@@ -96,7 +97,7 @@
   position: absolute;
   left: -1px;
   right: -1px;
-  // Don't grow so big as to overlap navigation
+  // Don"t grow so big as to overlap important things
   max-height: 300px;
   // Scroll properly if too big
   overflow-y: auto;
@@ -126,10 +127,8 @@
       outline: none;
     }
     &.selected::before {
-      display: inline-block;
-      font-size: inherit;
-      font-family: sans-serif;
-      content: "\002713";
+      @content: "selected";
+      .xq-select-icons(@icon-set, @content);
       background-color: transparent;
       position: relative;
       margin-left: -15px;

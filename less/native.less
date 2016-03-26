@@ -1,9 +1,9 @@
 // This is the native select, we're making everything but the text invisible so we can see the button styles in the wrapper
 .xq-select select {
-  width:100%;
-  margin:0;
+  width: 100%;
+  margin: 0;
   box-shadow: none;
-  background:none;
+  background: none;
   border: 1px solid transparent;
   outline: none;
   // Prefixed box-sizing rules necessary for older browsers
@@ -15,7 +15,7 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   // Font size must the 16px or larger to prevent iOS page zoom on focus
-  font-size:1em;
+  font-size: 1em;
   .has-warning &, .has-error &, .required &, .has-success & {
     border-color: transparent !important;
   }
@@ -28,7 +28,7 @@
   }
   option {
     //display: none !important;
-    padding: 6px 12px;
+    padding: @padding-base-vertical @padding-base-horizontal;
     color: @input-color;
     text-shadow: none;
     span {
@@ -45,12 +45,12 @@
     //display: none !important;
     border-top: 1px solid @input-border;
     color: darken(@input-color, 15%);
-    padding: 6px 12px;
+    padding: @padding-base-vertical @padding-base-horizontal;
     margin: 0;
     text-shadow: none;
     option {
-      margin: 0px -12px;
-      padding: 6px 12px;
+      margin: 0 -@padding-base-horizontal;
+      padding: @padding-base-vertical @padding-base-horizontal;
       &:first-child {
         margin-top: 3px;
       }
@@ -60,11 +60,11 @@
 
 // Focus style
 .xq-select select:focus {
-  outline:none;
+  outline: none;
   box-shadow: none;
-  background-color:transparent;
+  background-color: transparent;
   color: #222;
-  border:1px solid transparent;
+  border: 1px solid transparent;
 }
 
 // Automatic Fallback if Using Modernizr or xqDetect
