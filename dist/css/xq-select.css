@@ -20,7 +20,7 @@
 }
 .has-warning .xq-select select,
 .has-error .xq-select select,
-.required .xq-select select,
+.has-required .xq-select select,
 .has-success .xq-select select {
   border-color: transparent !important;
 }
