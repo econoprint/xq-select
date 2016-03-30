@@ -3,7 +3,7 @@ $( document ).ready( function () {
 } );
 
 /**
- * xqSelect v1.1.3 (https://github.com/exactquery/xq-select)
+ * xqSelect v1.1.4 (https://github.com/exactquery/xq-select)
  * @author  Aaron M Jones [aaron@jonesiscoding.com]
  * @licence MIT (https://github.com/exactquery/xq-select/blob/master/LICENSE)
  */
@@ -245,7 +245,7 @@ $(document).on("shown.bs.dropdown", ".xq-select", function () {
     if (spaceDown < 0 && (spaceUp >= 0 || spaceUp > spaceDown)) {
         $txqs.addClass("dropup");
     }
-}).on("hidden.bs.dropdown", ".dropdown", function() {
+}).on("hidden.bs.dropdown", ".xq-select", function() {
     // always reset after close
     $(this).removeClass("dropup");
 });
