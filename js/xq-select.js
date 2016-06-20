@@ -3,7 +3,7 @@ $( document ).ready( function () {
 } );
 
 /**
- * xqSelect v1.1.4 (https://github.com/exactquery/xq-select)
+ * xqSelect v1.1.5 (https://github.com/exactquery/xq-select)
  * @author  Aaron M Jones [aaron@jonesiscoding.com]
  * @licence MIT (https://github.com/exactquery/xq-select/blob/master/LICENSE)
  */
@@ -230,9 +230,9 @@ $( document ).ready( function () {
  * Credit to Zoltán Tamási -
  * http://stackoverflow.com/questions/21232685/bootstrap-drop-down-menu-auto-dropup-according-to-screen-position
  */
-$(document).on("shown.bs.dropdown", ".xq-select", function () {
+$(document).on("shown.bs.dropdown", function (e) {
     // calculate the required sizes, spaces
-    var $txqs = $(this);
+    var $txqs = $(e.target);
     var $ul = $txqs.children(".dropdown-menu");
     var $button = $txqs.children(".dropdown-toggle");
     var ulOffset = $ul.offset();
@@ -245,7 +245,7 @@ $(document).on("shown.bs.dropdown", ".xq-select", function () {
     if (spaceDown < 0 && (spaceUp >= 0 || spaceUp > spaceDown)) {
         $txqs.addClass("dropup");
     }
-}).on("hidden.bs.dropdown", ".xq-select", function() {
+}).on("hidden.bs.dropdown", function(e) {
     // always reset after close
-    $(this).removeClass("dropup");
+    $(e.target).removeClass("dropup");
 });
