@@ -7,7 +7,7 @@
         "replacement"
     ],
     "homepage": "https://github.com/exactquery/xq-select",
-    "version": "1.1.5",
+    "version": "1.2.0",
     "authors": [
         {
             "name": "AMJones",
@@ -17,6 +17,7 @@
     "license": "MIT",
     "require": {
         "twbs/bootstrap": "^3.3",
-        "components/jquery": "^1.10"
+        "components/jquery": "^1.10",
+        "twbs/bootstrap-sass": "^3.3"
     }
 }

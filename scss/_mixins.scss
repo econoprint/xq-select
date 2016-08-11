@@ -1,0 +1,43 @@
+// Mixin For Icon Set Fonts
+@mixin xq-select-icons($icon-set, $content) {
+  @if $icon-set == native {
+    display: inline-block;
+    font: normal normal normal $font-size-base/$line-height-base sans-serif; // shortening font declaration
+    font-size: inherit;
+    @if $content == caret-down {
+      content: "\0025BE";
+    }
+    @if $content == selected {
+      content: "\002713";
+    }
+  }
+  @if $icon-set == glyphicons {
+    display: inline-block;
+    position: relative;
+    top: 1px;
+    font: normal normal normal 14px/1 "Glyphicons Halflings"; // shortening font declaration
+    font-size: inherit;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    @if $content == caret-down {
+      content: "\e259";
+    }
+    @if $content == selected {
+      content: "\e067";
+    }
+  }
+  @if $icon-set == fontawesome {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome; // shortening font declaration
+    font-size: inherit; // can't have font-size inherit on line above, so need to override
+    text-rendering: auto; // optimizelegibility throws things off #1094
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    @if $content == caret-down {
+      content: "\f0d7";
+    }
+    @if $content == selected {
+      content: "\f00c";
+    }
+  }
+}

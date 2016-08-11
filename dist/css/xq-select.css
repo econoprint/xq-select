@@ -1,5 +1,5 @@
 /**
- * xqSelect v1.1.5 (https://github.com/exactquery/xq-select)
+ * xqSelect v1.2.0 (https://github.com/exactquery/xq-select)
  * @author  Aaron M Jones [aaron@jonesiscoding.com]
  * @licence MIT (https://github.com/exactquery/xq-select/blob/master/LICENSE)
  */
@@ -18,45 +18,39 @@
   -moz-appearance: none;
   font-size: 1em;
 }
-.has-warning .xq-select select,
-.has-error .xq-select select,
-.has-required .xq-select select,
-.has-success .xq-select select {
+.has-warning .xq-select select, .has-error .xq-select select, .has-required .xq-select select, .has-success .xq-select select {
   border-color: transparent !important;
 }
-.xq-select select[disabled],
-.xq-select select[readonly],
-fieldset[disabled] .xq-select select {
-  background-color: #eeeeee;
+.xq-select select[disabled], .xq-select select[readonly], fieldset[disabled] .xq-select select {
+  background-color: #eee;
   opacity: 1;
 }
-.xq-select select[disabled],
-fieldset[disabled] .xq-select select {
+.xq-select select[disabled], fieldset[disabled] .xq-select select {
   cursor: not-allowed;
 }
 .xq-select select option {
   padding: 6px 12px;
-  color: #555555;
+  color: #555;
   text-shadow: none;
 }
 .xq-select select option span {
-  color: #777777;
+  color: #777;
   text-shadow: none;
 }
 .xq-select select option[disabled] {
   cursor: not-allowed;
-  color: #777777;
+  color: #777;
   opacity: 1;
 }
 .xq-select select optgroup {
-  border-top: 1px solid #cccccc;
+  border-top: 1px solid #ccc;
   color: #2f2f2f;
   padding: 6px 12px;
   margin: 0;
   text-shadow: none;
 }
 .xq-select select optgroup option {
-  margin: 0 -12px;
+  margin: -12px;
   padding: 6px 12px;
 }
 .xq-select select optgroup option:first-child {
@@ -69,16 +63,15 @@ fieldset[disabled] .xq-select select {
   color: #222;
   border: 1px solid transparent;
 }
-.no-js .xq-select select option,
-.no-js .xq-select select optgroup {
+.no-js .xq-select select option, .no-js .xq-select select optgroup {
   display: block !important;
 }
 .xq-select {
   position: relative;
   display: block;
   padding: 0;
-  border: 1px solid #cccccc;
-  background-color: #ffffff;
+  border: 1px solid #ccc;
+  background-color: #fff;
 }
 .xq-select:hover {
   border-color: #b3b3b3;
@@ -113,11 +106,11 @@ fieldset[disabled] .xq-select select {
 }
 .xq-select::after {
   display: inline-block;
-  font: normal normal normal 14px/1.42857143 sans-serif;
+  font: normal normal normal 14px/1.42857 sans-serif;
   font-size: inherit;
   content: "\0025BE";
   background-color: transparent;
-  border-left: 1px solid #cccccc;
+  border-left: 1px solid #ccc;
   position: absolute;
   top: -1px;
   right: -1px;
@@ -148,14 +141,14 @@ fieldset[disabled] .xq-select select {
   bottom: 0;
   right: 0;
   width: 100%;
-  background: #ffffff;
+  background: #fff;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-  opacity: 0.0;
+  opacity: 0;
   z-index: 3;
 }
 .xq-select-dropdown {
-  background-color: #ffffff;
-  color: #555555;
+  background-color: #fff;
+  color: #555;
   border-color: #66afe9;
   min-width: 100% !important;
   position: absolute;
@@ -172,7 +165,7 @@ fieldset[disabled] .xq-select select {
   cursor: pointer;
 }
 .xq-select-dropdown > li > a span {
-  color: #777777;
+  color: #777;
   margin-left: 10px;
   text-shadow: none;
 }
@@ -181,14 +174,14 @@ fieldset[disabled] .xq-select select {
   font-weight: normal;
   text-shadow: none;
   padding: 6px 20px 3px 20px;
-  border-top: 1px solid #777777 !important;
+  border-top: 1px solid #777 !important;
 }
 .xq-select-dropdown .xq-select-item.focus {
   outline: none;
 }
 .xq-select-dropdown .xq-select-item.selected::before {
   display: inline-block;
-  font: normal normal normal 14px/1.42857143 sans-serif;
+  font: normal normal normal 14px/1.42857 sans-serif;
   font-size: inherit;
   content: "\002713";
   background-color: transparent;
@@ -197,12 +190,11 @@ fieldset[disabled] .xq-select select {
   margin-right: 5px;
 }
 .xq-select-dropdown .xq-select-item.disabled {
-  color: #777777;
+  color: #777;
   cursor: not-allowed;
 }
 /* Browser Hacks */
-x:-o-prefocus,
-.xq-select::after {
+x:-o-prefocus, .xq-select::after {
   display: none;
 }
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {

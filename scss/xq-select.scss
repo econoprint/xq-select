@@ -5,13 +5,13 @@
  */
 
 // Variables
-@import (optional, reference) "../vendor/twbs/bootstrap/less/variables.less";
-@import (reference) "variables.less";
+@import "../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+@import "_variables";
 // Mixins
-@import (reference) "mixins.less";
+@import "mixins";
 // CSS to Style Native Selects
-@import "native.less";
+@import "native";
 // Select Replacement
-@import "faux.less";
+@import "faux";
 // Ugly Browser Specific Hacks
-@import "hacks.less";
+@import "hacks";

@@ -1,0 +1,140 @@
+// Container used for styling the custom select, the button class below adds the bg gradient, corners, etc.
+.xq-select {
+  position: relative;
+  display: block;
+  padding: 0;
+  border: 1px solid $input-border;
+  background-color: $input-bg;
+  &:hover {
+    border-color: darken($input-border, 10%);
+  }
+  select {
+    // Make sure the select is behind the faux select
+    position: relative;
+    z-index: $zindex-select-native;
+  }
+  // Contextual Borders
+  .has-required & {
+    border-color: $brand-required;
+    &:hover {
+      border-color: darken($brand-required, 10%);
+    }
+  }
+  .has-error & {
+    border-color: $brand-danger;
+    &:hover {
+      border-color: darken($brand-danger, 10%);
+    }
+  }
+  .has-warning & {
+    border-color: $brand-warning;
+    &:hover {
+      border-color: darken($brand-warning, 10%);
+    }
+  }
+  .has-success & {
+    border-color: $brand-success;
+    &:hover {
+      border-color: darken($brand-success, 10%);
+    }
+  }
+}
+
+.xq-select::after {
+  $content: caret-down;
+  @include xq-select-icons($icon-set, $content);
+  background-color: transparent;
+  border-left: 1px solid $input-border;
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  bottom: 0;
+  padding: $padding-xs-vertical $padding-xs-horizontal;
+  z-index: $zindex-select-arrow;
+  // This hack make the select behind  the arrow clickable in some browsers
+  pointer-events:none;
+  // Contextual Borders
+  .has-required & {
+    border-left-color: $brand-required;
+  }
+  .has-error & {
+    border-left-color: $brand-danger;
+    color: $brand-danger;
+  }
+  .has-warning & {
+    border-left-color: $brand-warning;
+    color: $brand-warning;
+  }
+  .has-success & {
+    border-left-color: $brand-success;
+    color: $brand-success;
+  }
+}
+
+.xq-select button {
+  // The clickable, semi-invisible button for opening dropdown
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  background: $input-bg;
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  opacity: 0.0;
+  z-index: $zindex-select-button;
+}
+
+// Formatting for Faux Selects
+.xq-select-dropdown {
+  background-color: $input-bg;
+  color: $input-color;
+  border-color: $input-border-focus;
+  // Occupy same space as select, plus wrapper borders.
+  min-width: 100% !important;
+  position: absolute;
+  left: -1px;
+  right: -1px;
+  // Don"t grow so big as to overlap important things
+  max-height: 300px;
+  // Scroll properly if too big
+  overflow-y: auto;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  // Stay above other items
+  z-index: $zindex-select-dropdown;
+  & > li > a {
+    cursor: pointer;
+    & span {
+      color: $text-muted;
+      margin-left: 10px;
+      text-shadow: none;
+    }
+  }
+  // optgroup display
+  .optgroup {
+    color: darken($input-color, 15%);
+    font-weight: normal;
+    text-shadow: none;
+    padding: 6px 20px 3px 20px;
+    border-top: 1px solid $gray-light !important;
+  }
+  .xq-select-item {
+    &.focus {
+      outline: none;
+    }
+    &.selected::before {
+      $content: selected;
+      @include xq-select-icons($icon-set, $content);
+      background-color: transparent;
+      position: relative;
+      margin-left: -15px;
+      margin-right: 5px;
+    }
+    &.disabled {
+      color: $gray-light;
+      cursor: not-allowed;
+    }
+  }
+}
