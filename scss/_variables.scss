@@ -1,10 +1,54 @@
 // Imports
-@import "../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap/variables";
 
-// Variables
-$zindex-select-dropdown: $zindex-modal + 10 !default;            // must be higher than a modal background (1050)
-$zindex-select-native:   1 !default;                             // for the native select box to be behind the faux select
-$zindex-select-arrow:    $zindex-select-native + 1 !default;     // for the arrow of the faux select to be above the native arrow
-$zindex-select-button:   $zindex-select-arrow + 1 !default;      // for the button of the faux select to sit on top of it all
-$brand-required:         lighten($brand-primary, 15%) !default;  // For HTML5 required context
-$icon-set:               "native" !default;                      // Possible Values Include native, glyphicons, and fontawesome
+@import "variables/root";
+@import "variables/color";
+@import "variables/bs3.scss";
+
+// Layering
+$zindex-select-dropdown:    $zindex-modal + 10 !default;            // must be higher than a modal background (1050)
+$zindex-select-native:      1 !default;                             // for the native select box to be behind the faux select
+$zindex-select-arrow:       $zindex-select-native + 1 !default;     // for the arrow of the faux select to be above the native arrow
+$zindex-select-button:      $zindex-select-arrow + 1 !default;      // for the button of the faux select to sit on top of it all
+
+// Colors
+$brand-required:            lighten($brand-primary, 15%) !default;  // For HTML5 required context
+$input-border:              #ccc !default;
+$input-border-focus:        #66afe9 !default;
+$input-bg:                  #fff !default;
+$input-bg-disabled:         $gray-lighter !default;
+$input-color:               $gray !default;
+$text-muted:                $gray-light !default;
+
+// Compatibility
+$enable-fallback:           false !default;
+$enable-baseline:           false !default;
+$enable-rounding:           true !default;
+$enable-feature-detection:  true !default;
+
+// Icons
+$enable-unicode-icons:      true !default;
+$enable-font-awesome:       false !default;
+$enable-glyphicons:         false !default;
+$enable-svg-icons:          false !default;
+@if $enable-svg-icons {
+  $icon-set: "svg" !default;
+} @else if $enable-font-awesome {
+  $icon-set: "fontawesome" !default;
+} @else if $enable-glyphicons {
+  $icon-set: "glyphicons" !default;
+} @else if $enable-unicode-icons == false {
+  @error "You must enable one of the four icon sets.";
+}
+$icon-set: "native" !default;
+
+// Spacing
+$padding-xs-vertical:       1px !default;
+$padding-xs-horizontal:     5px !default;
+$padding-base-vertical:     6px !default;
+$padding-base-horizontal:   12px !default;
+$dropdown-max-height:       250px !default;
+
+// Other
+$cursor-disabled:           not-allowed !default;
+$font-size-base:            14px !default;
+$line-height-base:          1.428571429 !default; // 20/14

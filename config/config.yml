@@ -1,0 +1,39 @@
+pleasing:
+  filters:
+    pleasing_minify:
+      class: 'XQ\Pleasing\Filter\PleasingMinifyFilter'
+    pleasing_prefix:
+      class: 'XQ\Pleasing\Filter\PleasingPrefixFilter'
+    pleasing_sass:
+      class: 'XQ\Pleasing\Filter\PleasingSassFilter'
+      bin: '/usr/local/bin/sassc'
+      apply_to: '\.scss$'
+      import_paths:
+        - '%kernel.root_dir%/../../vendor'
+      output_style: 'expanded'
+  assets:
+    xqselect_css:
+      inputs:
+        - '%kernel.root_dir%/../scss/xq-select.scss'
+      filters:
+        - pleasing_sass
+        - pleasing_prefix
+      output: 'dist/css/xq-select.css'
+    xqselect_js:
+      inputs:
+        - '%kernel.root_dir%/../js/xq-select.js'
+      output: 'dist/js/xq-select.js'
+    xqselect_min_css:
+      inputs:
+        - '%kernel.root_dir%/../scss/xq-select.scss'
+      filters:
+        - pleasing_sass
+        - pleasing_prefix
+        - pleasing_minify
+      output: 'dist/css/xq-select.min.css'
+    xqselect_min_js:
+      inputs:
+        - '%kernel.root_dir%/../js/xq-select.js'
+      filters:
+        - pleasing_minify
+      output: 'dist/js/xq-select.min.js'

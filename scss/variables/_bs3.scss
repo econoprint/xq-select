@@ -1,0 +1,10 @@
+@import "color";
+
+$brand-primary:   map-get($theme-colors,primary) !default;
+$brand-success:   map-get($theme-colors,success) !default;
+$brand-info:      map-get($theme-colors,info) !default;
+$brand-warning:   map-get($theme-colors,warning) !default;
+$brand-danger:    map-get($theme-colors,danger) !default;
+$gray-light:      map-get($colors,gray-light) !default;
+$gray-lighter:    map-get($colors,gray-lighter) !default;
+$gray:            map-get($colors,gray) !default;

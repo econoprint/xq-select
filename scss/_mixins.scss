@@ -1,3 +1,5 @@
+@import "variables.scss";
+
 // Mixin For Icon Set Fonts
 @mixin xq-select-icons($icon-set, $content) {
   @if $icon-set == native {

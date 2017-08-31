@@ -1,112 +1,139 @@
 /**
- * xqSelect v1.2.1 (https://github.com/exactquery/xq-select)
+ * xqSelect v1.4 (https://github.com/exactquery/xq-select)
  * @author  Aaron M Jones [aaron@jonesiscoding.com]
  * @licence MIT (https://github.com/exactquery/xq-select/blob/master/LICENSE)
  */
 .xq-select select {
-  width: 100%;
+  flex: 1 0 100%;
+  max-width: 100%;
   margin: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
   box-shadow: none;
   background: none;
   border: 1px solid transparent;
   outline: none;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
+  appearance: none;
   font-size: 1em;
 }
+
 .has-warning .xq-select select, .has-error .xq-select select, .has-required .xq-select select, .has-success .xq-select select {
   border-color: transparent !important;
 }
+
 .xq-select select[disabled], .xq-select select[readonly], fieldset[disabled] .xq-select select {
-  background-color: #eee;
+  background-color: #dee2e6;
   opacity: 1;
 }
+
 .xq-select select[disabled], fieldset[disabled] .xq-select select {
   cursor: not-allowed;
 }
+
 .xq-select select option {
   padding: 6px 12px;
-  color: #555;
+  color: #868e96;
   text-shadow: none;
 }
+
 .xq-select select option span {
-  color: #777;
+  color: #495057;
   text-shadow: none;
 }
+
 .xq-select select option[disabled] {
   cursor: not-allowed;
-  color: #777;
+  color: #495057;
   opacity: 1;
 }
+
 .xq-select select optgroup {
   border-top: 1px solid #ccc;
-  color: #2f2f2f;
+  color: #60686f;
   padding: 6px 12px;
   margin: 0;
   text-shadow: none;
 }
+
 .xq-select select optgroup option {
   margin: -12px;
   padding: 6px 12px;
 }
+
 .xq-select select optgroup option:first-child {
   margin-top: 3px;
 }
+
 .xq-select select:focus {
   outline: none;
   box-shadow: none;
   background-color: transparent;
-  color: #222;
+  color: #6c757d;
   border: 1px solid transparent;
 }
+
 .no-js .xq-select select option, .no-js .xq-select select optgroup {
   display: block !important;
 }
+
 .xq-select {
   position: relative;
-  display: block;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: none;
   padding: 0;
   border: 1px solid #ccc;
   background-color: #fff;
 }
+
 .xq-select:hover {
   border-color: #b3b3b3;
 }
+
 .xq-select select {
   position: relative;
   z-index: 1;
 }
+
 .has-required .xq-select {
-  border-color: #64a0d3;
+  border-color: #4da3ff;
 }
+
 .has-required .xq-select:hover {
-  border-color: #3c87c8;
+  border-color: #1a88ff;
 }
+
 .has-error .xq-select {
-  border-color: #d9534f;
+  border-color: #dc3545;
 }
+
 .has-error .xq-select:hover {
-  border-color: #c9302c;
+  border-color: #bd2130;
 }
+
 .has-warning .xq-select {
-  border-color: #f0ad4e;
+  border-color: #ffc107;
 }
+
 .has-warning .xq-select:hover {
-  border-color: #ec971f;
+  border-color: #d39e00;
 }
+
 .has-success .xq-select {
-  border-color: #5cb85c;
+  border-color: #28a745;
 }
+
 .has-success .xq-select:hover {
-  border-color: #449d44;
+  border-color: #1e7e34;
 }
+
 .xq-select::after {
   display: inline-block;
-  font: normal normal normal 14px/1.42857 sans-serif;
+  font: normal normal normal 9.8px sans-serif;
   font-size: inherit;
   content: "\0025BE";
   background-color: transparent;
@@ -119,21 +146,26 @@
   z-index: 2;
   pointer-events: none;
 }
+
 .has-required .xq-select::after {
-  border-left-color: #64a0d3;
+  border-left-color: #4da3ff;
 }
+
 .has-error .xq-select::after {
-  border-left-color: #d9534f;
-  color: #d9534f;
+  border-left-color: #dc3545;
+  color: #dc3545;
 }
+
 .has-warning .xq-select::after {
-  border-left-color: #f0ad4e;
-  color: #f0ad4e;
+  border-left-color: #ffc107;
+  color: #ffc107;
 }
+
 .has-success .xq-select::after {
-  border-left-color: #5cb85c;
-  color: #5cb85c;
+  border-left-color: #28a745;
+  color: #28a745;
 }
+
 .xq-select button {
   position: absolute;
   top: 0;
@@ -142,46 +174,51 @@
   right: 0;
   width: 100%;
   background: #fff;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-  opacity: 0;
+  opacity: 0.0;
   z-index: 3;
 }
+
 .xq-select-dropdown {
   background-color: #fff;
-  color: #555;
+  color: #868e96;
   border-color: #66afe9;
   min-width: 100% !important;
   position: absolute;
   left: -1px;
   right: -1px;
-  max-height: 300px;
+  max-height: 250px;
   overflow-y: auto;
   overflow-x: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   z-index: 1060;
 }
+
 .xq-select-dropdown > li > a {
   cursor: pointer;
 }
+
 .xq-select-dropdown > li > a span {
-  color: #777;
+  color: #495057;
   margin-left: 10px;
   text-shadow: none;
 }
+
 .xq-select-dropdown .optgroup {
-  color: #2f2f2f;
+  color: #60686f;
   font-weight: normal;
   text-shadow: none;
   padding: 6px 20px 3px 20px;
-  border-top: 1px solid #777 !important;
+  border-top: 1px solid #495057 !important;
 }
+
 .xq-select-dropdown .xq-select-item.focus {
   outline: none;
 }
-.xq-select-dropdown .xq-select-item.selected::before {
+
+.xq-select-dropdown .xq-select-item.selected:before {
   display: inline-block;
-  font: normal normal normal 14px/1.42857 sans-serif;
+  font: normal normal normal 9.8px sans-serif;
   font-size: inherit;
   content: "\002713";
   background-color: transparent;
@@ -189,14 +226,17 @@
   margin-left: -15px;
   margin-right: 5px;
 }
+
 .xq-select-dropdown .xq-select-item.disabled {
-  color: #777;
+  color: #495057;
   cursor: not-allowed;
 }
+
 /* Browser Hacks */
 x:-o-prefocus, .xq-select::after {
   display: none;
 }
+
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
   .xq-select select::-ms-expand {
     display: none;
@@ -206,8 +246,8 @@ x:-o-prefocus, .xq-select::after {
     color: #222;
   }
 }
+
 .xq-select select:-moz-focusring {
   color: transparent;
   text-shadow: 0 0 0 #000;
 }
-/* Browser Hacks */

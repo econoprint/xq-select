@@ -1,7 +1,11 @@
+@import "variables";
+@import "mixins";
+
 // Container used for styling the custom select, the button class below adds the bg gradient, corners, etc.
 .xq-select {
   position: relative;
-  display: block;
+  display: flex;
+  flex-wrap: nowrap;
   padding: 0;
   border: 1px solid $input-border;
   background-color: $input-bg;
@@ -40,6 +44,12 @@
   }
 }
 
+@if $enable-fallback {
+  .xq-select {
+    display: block;
+  }
+}
+
 .xq-select::after {
   $content: caret-down;
   @include xq-select-icons($icon-set, $content);
@@ -51,7 +61,7 @@
   bottom: 0;
   padding: $padding-xs-vertical $padding-xs-horizontal;
   z-index: $zindex-select-arrow;
-  // This hack make the select behind  the arrow clickable in some browsers
+  // This hack make the select behind the arrow clickable in some browsers
   pointer-events:none;
   // Contextual Borders
   .has-required & {
@@ -80,9 +90,14 @@
   right: 0;
   width: 100%;
   background: $input-bg;
-  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
   opacity: 0.0;
   z-index: $zindex-select-button;
+}
+
+@if $enable-baseline {
+  .xq-select button {
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  }
 }
 
 // Formatting for Faux Selects
@@ -95,8 +110,8 @@
   position: absolute;
   left: -1px;
   right: -1px;
-  // Don"t grow so big as to overlap important things
-  max-height: 300px;
+  // Don't grow so big as to overlap important things
+  max-height: $dropdown-max-height;
   // Scroll properly if too big
   overflow-y: auto;
   overflow-x: hidden;
@@ -124,7 +139,7 @@
     &.focus {
       outline: none;
     }
-    &.selected::before {
+    &.selected:before {
       $content: selected;
       @include xq-select-icons($icon-set, $content);
       background-color: transparent;
@@ -134,7 +149,7 @@
     }
     &.disabled {
       color: $gray-light;
-      cursor: not-allowed;
+      cursor: $cursor-disabled;
     }
   }
 }

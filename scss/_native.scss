@@ -1,19 +1,19 @@
+@import "variables";
+
 // This is the native select, we're making everything but the text invisible so we can see the button styles in the wrapper
 .xq-select select {
-  width: 100%;
+  // Sizing
+  flex: 1 0 100%;
+  max-width: 100%;
   margin: 0;
+  box-sizing: border-box;
+  // Color
   box-shadow: none;
   background: none;
   border: 1px solid transparent;
   outline: none;
-  // Prefixed box-sizing rules necessary for older browsers
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
   // Remove select styling
   appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
   // Font size must the 16px or larger to prevent iOS page zoom on focus
   font-size: 1em;
   .has-warning &, .has-error &, .has-required &, .has-success & {
@@ -27,7 +27,6 @@
     cursor: $cursor-disabled;
   }
   option {
-    //display: none !important;
     padding: $padding-base-vertical $padding-base-horizontal;
     color: $input-color;
     text-shadow: none;
@@ -63,16 +62,28 @@
   outline: none;
   box-shadow: none;
   background-color: transparent;
-  color: #222;
+  color: darken($input-color, 10%);
   border: 1px solid transparent;
 }
 
+@if $enable-fallback {
+  .xq-select select {
+    // Sizing
+    width: 100%;
+    // Prefixed box-sizing rules necessary for older browsers
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+  }
+}
+
 // Automatic Fallback if Using Modernizr or xqDetect
-.no-js {
-  .xq-select {
-    select {
-      option, optgroup {
-        display: block !important;
+@if $enable-feature-detection {
+  .no-js {
+    .xq-select {
+      select {
+        option, optgroup {
+          display: block !important;
+        }
       }
     }
   }
