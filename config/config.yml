@@ -4,6 +4,7 @@ pleasing:
       class: 'XQ\Pleasing\Filter\PleasingMinifyFilter'
     pleasing_prefix:
       class: 'XQ\Pleasing\Filter\PleasingPrefixFilter'
+      apply_to: '\.scss$'
     pleasing_sass:
       class: 'XQ\Pleasing\Filter\PleasingSassFilter'
       bin: '/usr/local/bin/sassc'
@@ -13,6 +14,7 @@ pleasing:
       output_style: 'expanded'
   assets:
     xqselect_css:
+      minify: 'also'
       inputs:
         - '%kernel.root_dir%/../scss/xq-select.scss'
       filters:
@@ -23,17 +25,3 @@ pleasing:
       inputs:
         - '%kernel.root_dir%/../js/xq-select.js'
       output: 'dist/js/xq-select.js'
-    xqselect_min_css:
-      inputs:
-        - '%kernel.root_dir%/../scss/xq-select.scss'
-      filters:
-        - pleasing_sass
-        - pleasing_prefix
-        - pleasing_minify
-      output: 'dist/css/xq-select.min.css'
-    xqselect_min_js:
-      inputs:
-        - '%kernel.root_dir%/../js/xq-select.js'
-      filters:
-        - pleasing_minify
-      output: 'dist/js/xq-select.min.js'

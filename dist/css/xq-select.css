@@ -1,9 +1,11 @@
 /**
- * xqSelect v1.4 (https://github.com/exactquery/xq-select)
+ * xqSelect v2.0.1 (https://github.com/exactquery/xq-select)
  * @author  Aaron M Jones [aaron@jonesiscoding.com]
  * @licence MIT (https://github.com/exactquery/xq-select/blob/master/LICENSE)
  */
 .xq-select select {
+  -webkit-flex: 1 0 100%;
+  -ms-flex: 1 0 100%;
   flex: 1 0 100%;
   max-width: 100%;
   margin: 0;
@@ -84,7 +86,8 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: none;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
   padding: 0;
   border: 1px solid #ccc;
   background-color: #fff;

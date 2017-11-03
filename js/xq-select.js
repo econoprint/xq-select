@@ -3,7 +3,7 @@ $( document ).ready( function () {
 } );
 
 /**
- * xqSelect v1.4 (https://github.com/exactquery/xq-select)
+ * xqSelect v2.0.1 (https://github.com/exactquery/xq-select)
  * @author  Aaron M Jones [aaron@jonesiscoding.com]
  * @licence MIT (https://github.com/exactquery/xq-select/blob/master/LICENSE)
  */
@@ -35,36 +35,37 @@ $( document ).ready( function () {
          */
         base.RenderSelect = function(select, index) {
             var $select = $(select);
-            // Get the Wrapper and Remove xqSelect and Events
-            var $wrapper  = $select.parents( base.options.wrapper );
-            $wrapper.off();
-            $wrapper.find( '.xq-select-dropdown' ).remove();
-            $wrapper.find( 'button' ).remove();
-            // Only add the faux select if we're supposed to
-            if( $wrapper.attr('data-native') !== 'true' && !(base.isMobile() && $wrapper.attr('data-mobile') === 'true' )) {
+            if (!($select.prop('disabled' || $select.prop('readonly')))) {
+              // Get the Wrapper and Remove xqSelect and Events
+              var $wrapper  = $select.parents( base.options.wrapper );
+              $wrapper.off();
+              $wrapper.find( '.xq-select-dropdown' ).remove();
+              $wrapper.find( 'button' ).remove();
+              // Only add the faux select if we're supposed to
+              if( $wrapper.attr('data-native') !== 'true' && !(base.isMobile() && $wrapper.attr('data-mobile') === 'true' )) {
                 var $dropdown = $( base.options.templateFauxSelect );
                 var $button = $(base.options.templateFauxButton);
                 var tabIndex = (typeof $select.attr( 'tabindex' ) !== 'undefined') ? $select.attr('tabindex') : 0;
                 var target    = $select.prop('id');
                 if ( typeof target === 'undefined' ) {
-                    target = 'xqSelect' + index;
-                    $select.attr( 'id', target );
+                  target = 'xqSelect' + index;
+                  $select.attr( 'id', target );
                 }
                 var opts = $select.children();
                 opts.each( function () {
-                    var $opt = $(this);
-                    if($opt.prop('tagName') === 'OPTION') {
-                        var $ddItem = base.CreateOption( $opt, target );
-                        $dropdown.append( $ddItem );
-                    } else if($opt.prop('tagName') === 'OPTGROUP') {
-                        var $groupItem = base.CreateOptGroup( $opt );
-                        $dropdown.append( $groupItem );
-                        var gOpts = $opt.children();
-                        gOpts.each(function() {
-                            var $ddItem = base.CreateOption( $(this), target);
-                            $dropdown.append( $ddItem );
-                        });
-                    }
+                  var $opt = $(this);
+                  if($opt.prop('tagName') === 'OPTION') {
+                    var $ddItem = base.CreateOption( $opt, target );
+                    $dropdown.append( $ddItem );
+                  } else if($opt.prop('tagName') === 'OPTGROUP') {
+                    var $groupItem = base.CreateOptGroup( $opt );
+                    $dropdown.append( $groupItem );
+                    var gOpts = $opt.children();
+                    gOpts.each(function() {
+                      var $ddItem = base.CreateOption( $(this), target);
+                      $dropdown.append( $ddItem );
+                    });
+                  }
                 } );
                 $dropdown.find('a').eq($select.prop('selectedIndex')).addClass('selected');
                 $button.attr( 'tabindex', tabIndex );
@@ -75,7 +76,7 @@ $( document ).ready( function () {
                 $wrapper.on( 'click','.xq-select-item', function() { base.onClick(this); } );
                 $wrapper.append( $button );
                 $wrapper.append( $dropdown );
-
+              }
             }
         };
 
