@@ -35,10 +35,6 @@ select.xq-select {
       background-color: $custom-select-bg;
     }
   }
-  // Contextual Styles
-  .has-warning &, .has-error &, .has-required &, .has-success & {
-    border-color: transparent !important;
-  }
   // Disabled Styles
   &:disabled, fieldset[disabled] &, &[read-only] {
     color: $custom-select-disabled-color;
