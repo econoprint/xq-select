@@ -49,27 +49,23 @@ select.xq-select {
   &:disabled, fieldset[disabled] {
     cursor: $cursor-disabled;
   }
-  option {
-    padding: $custom-select-padding-y $custom-select-padding-x;
+  // Options
+  > option {
     color: $custom-select-color;
     text-shadow: none;
     span {
       color: rgba($custom-select-color, .7);
       text-shadow: none;
     }
-    &[disabled] {
-      cursor: $cursor-disabled;
-      color: $custom-select-disabled-color;
-      opacity: 1; // iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655
-    }
   }
-  optgroup {
+  // Optgroups
+  > optgroup {
     border-top: 1px solid $custom-select-border-color;
     color: darken($custom-select-color, 15%);
     padding: $custom-select-padding-y $custom-select-padding-x;
     margin: 0;
     text-shadow: none;
-    option {
+    > option {
       margin: 0 -$custom-select-padding-x;
       padding: $custom-select-padding-y $custom-select-padding-x;
       &:first-child {
