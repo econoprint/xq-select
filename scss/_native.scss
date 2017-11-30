@@ -35,14 +35,18 @@ select.xq-select {
       background-color: $custom-select-bg;
     }
   }
+  // Contextual Styles
   .has-warning &, .has-error &, .has-required &, .has-success & {
     border-color: transparent !important;
   }
-  &[disabled], &[readonly], fieldset[disabled] & {
+  // Disabled Styles
+  &:disabled, fieldset[disabled] &, &[read-only] {
+    color: $custom-select-disabled-color;
     background-color: $custom-select-disabled-bg;
-    opacity: 1; // iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655
+    opacity: 1; // iOS fix for unreadable disabled content; see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Input#Browser_compatibility
+
   }
-  &[disabled], fieldset[disabled] & {
+  &:disabled, fieldset[disabled] {
     cursor: $cursor-disabled;
   }
   option {
