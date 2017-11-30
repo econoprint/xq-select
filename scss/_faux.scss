@@ -70,3 +70,11 @@
     }
   }
 }
+
+.touch .xq-select-wrapper {
+  > .dropdown-menu {
+    > li > a {
+      padding: $custom-select-padding-y $custom-select-padding-x;
+    }
+  }
+}
