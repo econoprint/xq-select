@@ -70,15 +70,3 @@
     }
   }
 }
-
-@if $enable-fallback {
-  .xq-select-wrapper {
-    display: block;
-  }
-}
-
-@if $enable-baseline {
-  .xq-select-wrapper button {
-    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-  }
-}
