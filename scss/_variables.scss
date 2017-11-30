@@ -1,60 +1,30 @@
 // Imports
-
-@import "variables/root";
-@import "variables/color";
-@import "variables/bs3.scss";
+@import "variables/bootstrap-shim";
 
 // Layering
 $custom-select-zindex:      $zindex-modal + 10 !default;            // must be higher than a modal background (1050)
 $native-select-zindex:      1 !default;                             // for the native select box to be behind the faux select
-$zindex-select-arrow:       $native-select-zindex + 1 !default;     // for the arrow of the faux select to be above the native arrow
-$zindex-select-button:      $zindex-select-arrow + 1 !default;      // for the button of the faux select to sit on top of it all
 
 // Colors
-$brand-required:                   lighten($brand-primary, 15%) !default;  // For HTML5 required context
 $custom-select-border-color:       #ccc !default;
 $custom-select-focus-border-color: #66afe9 !default;
 $custom-select-bg:                 #fff !default;
-$custom-select-disabled-bg:        $gray-lighter !default;
-$custom-select-color:              $gray !default;
-$custom-select-box-shadow:         null !default;
-$custom-select-border-width:       1px !default;
-$custom-select-border-radius:      4px !default;
-$custom-select-focus-box-shadow:   inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba($custom-select-focus-border-color, .6) !default;
+$custom-select-disabled-bg:        $input-disabled-bg !default;
+$custom-select-color:              $input-color !default;
+$custom-select-box-shadow:         $input-box-shadow !default;
+$custom-select-border-width:       $input-border-width !default;
+$custom-select-border-radius:      $input-border-radius !default;
+$custom-select-focus-box-shadow:   $input-focus-box-shadow !default;
 $custom-select-disabled-color:     $custom-select-color !default;
-
-// Compatibility
-$enable-fallback:           false !default;
-$enable-baseline:           false !default;
-$enable-rounding:           true !default;
-$enable-feature-detection:  true !default;
 
 // Icons
 $font-weight-medium:        bold  !default;
-$enable-unicode-icons:      true  !default;
-$enable-font-awesome:       false !default;
-$enable-glyphicons:         false !default;
-$enable-svg-icons:          false !default;
-@if $enable-svg-icons {
-  $icon-set: "svg" !default;
-} @else if $enable-font-awesome {
-  $icon-set: "fontawesome" !default;
-} @else if $enable-glyphicons {
-  $icon-set: "glyphicons" !default;
-} @else if $enable-unicode-icons == false {
-  @error "You must enable one of the four icon sets.";
-}
-$icon-set: "native" !default;
 
 // Other
 $cursor-disabled:           not-allowed !default;
-$font-size-base:            14px !default;
-$line-height-base:          1.428571429 !default; // 20/14
 
 // Spacing
-$padding-xs-vertical:       1px !default;
-$padding-xs-horizontal:     5px !default;
-$custom-select-padding-y:   6px !default;
-$custom-select-padding-x:   12px !default;
+$custom-select-padding-y:   $input-btn-padding-y !default;
+$custom-select-padding-x:   $input-btn-padding-x !default;
 $dropdown-max-height:       250px !default;
-$custom-select-height:      ($custom-select-padding-y * 2) + $font-size-base;
+$custom-select-height:      $input-height !default;
