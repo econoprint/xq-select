@@ -5,42 +5,26 @@
 .xq-select-wrapper {
   position:         relative;
   display:          flex;
-  flex-wrap:        nowrap;
   padding:          0;
-  border:           1px solid $custom-select-border-color;
-  background-color: $custom-select-bg;
-  &:hover {
-    border-color: darken($custom-select-border-color, 10%);
-  }
-  > select {
+  margin:           0;
+  border:           none;
+  background-color: transparent;
+  > select.xq-select {
     // Make sure the select is behind the faux select
     position: relative;
     z-index:  $native-select-zindex;
   }
-  // Contextual Borders
-  .has-required & {
-    border-color: $brand-required;
-    &:hover {
-      border-color: darken($brand-required, 10%);
-    }
-  }
-  .has-error & {
-    border-color: $brand-danger;
-    &:hover {
-      border-color: darken($brand-danger, 10%);
-    }
-  }
-  .has-warning & {
-    border-color: $brand-warning;
-    &:hover {
-      border-color: darken($brand-warning, 10%);
-    }
-  }
-  .has-success & {
-    border-color: $brand-success;
-    &:hover {
-      border-color: darken($brand-success, 10%);
-    }
+  // The clickable, semi-invisible button for opening dropdown
+  > button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    background: transparent;
+    opacity: 0.0;
+    z-index: $native-select-zindex + 2;
   }
 }
 
@@ -79,19 +63,6 @@
     border-left-color: $brand-success;
     color: $brand-success;
   }
-}
-
-.xq-select-wrapper button {
-  // The clickable, semi-invisible button for opening dropdown
-  position:   absolute;
-  top:        0;
-  left:       0;
-  bottom:     0;
-  right:      0;
-  width:      100%;
-  background: $custom-select-bg;
-  opacity:    0.0;
-  z-index:    $zindex-select-button;
 }
 
 @if $enable-baseline {
