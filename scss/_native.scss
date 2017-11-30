@@ -76,25 +76,3 @@ select.xq-select {
 x:-o-prefocus, select.xq-select {
   background-image: none;
 }
-
-
-@if $enable-fallback {
-  select.xq-select {
-    // Sizing
-    width: 100%;
-    // Prefixed box-sizing rules necessary for older browsers
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-  }
-}
-
-// Automatic Fallback if Using Modernizr or xqDetect
-@if $enable-feature-detection {
-  .no-js {
-    select.xq-select {
-      option, optgroup {
-        display: block !important;
-      }
-    }
-  }
-}
