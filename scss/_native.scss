@@ -2,56 +2,53 @@
 
 // This is the native select, we're making everything but the text invisible so we can see the button styles in the wrapper
 select.xq-select {
-  // Sizing
-  flex: 1 0 100%;
+  // Sizing & Spacing
+  flex: 1 0 auto;
   max-width: 100%;
+  display: inline-flex;
+  align-items: center;
   margin: 0;
-  box-sizing: border-box;
-  // Color
-  box-shadow: none;
-  background: none;
-  border: 1px solid transparent;
-  outline: none;
-  // Remove select styling
-  appearance: none;
-  // Font size must the 16px or larger to prevent iOS page zoom on focus
-  font-size: 1em;
+  padding: 0 $custom-select-padding-x;
+  height: $custom-select-height;
+  // Color & Arrow
+  color: $custom-select-color;
+  background: $custom-select-bg;
+  appearance: none; // Remove select styling
   .has-warning &, .has-error &, .has-required &, .has-success & {
     border-color: transparent !important;
   }
   &[disabled], &[readonly], fieldset[disabled] & {
-    background-color: $input-bg-disabled;
+    background-color: $custom-select-disabled-bg;
     opacity: 1; // iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655
   }
   &[disabled], fieldset[disabled] & {
     cursor: $cursor-disabled;
   }
   option {
-    padding: $padding-base-vertical $padding-base-horizontal;
-    color: $input-color;
+    padding: $custom-select-padding-y $custom-select-padding-x;
+    color: $custom-select-color;
     text-shadow: none;
     span {
-      color: $text-muted;
+      color: rgba($custom-select-color, .7);
       text-shadow: none;
     }
     &[disabled] {
       cursor: $cursor-disabled;
-      color: $gray-light;
+      color: $custom-select-disabled-color;
       opacity: 1; // iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655
     }
   }
   optgroup {
-    //display: none !important;
-    border-top: 1px solid $input-border;
-    color: darken($input-color, 15%);
-    padding: $padding-base-vertical $padding-base-horizontal;
+    border-top: 1px solid $custom-select-border-color;
+    color: darken($custom-select-color, 15%);
+    padding: $custom-select-padding-y $custom-select-padding-x;
     margin: 0;
     text-shadow: none;
     option {
-      margin: 0 -$padding-base-horizontal;
-      padding: $padding-base-vertical $padding-base-horizontal;
+      margin: 0 -$custom-select-padding-x;
+      padding: $custom-select-padding-y $custom-select-padding-x;
       &:first-child {
-        margin-top: 3px;
+        margin-top: .25rem;
       }
     }
   }
@@ -60,10 +57,10 @@ select.xq-select {
 // Focus style
 select.xq-select:focus {
   outline: none;
-  box-shadow: none;
+  box-shadow: $custom-select-focus-box-shadow;
   background-color: transparent;
-  color: darken($input-color, 10%);
-  border: 1px solid transparent;
+  color: darken($custom-select-color, 10%);
+  border: 1px solid $custom-select-focus-border-color;
 }
 
 @if $enable-fallback {
