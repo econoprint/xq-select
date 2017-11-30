@@ -1,4 +1,27 @@
-@import "variables.scss";
+@import "variables";
+
+/// Remove the unit of a length
+/// @param {Number} $number - Number to remove unit from
+/// @return {Number} - Unitless number
+@function strip-unit($number) {
+  @if type-of($number) == 'number' and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
+
+  @return $number;
+}
+
+@mixin border-and-shadow() {
+  // Shadows
+  $box-shadow: if($custom-select-box-shadow, $custom-select-box-shadow, 0);
+  box-shadow: $box-shadow; // Remove hideous inner shadow on iOS
+  // Border
+  $border-width: if(strip-unit($custom-select-border-width) > 0, $custom-select-border-width, 1px);
+  border: $custom-select-border-width solid $custom-select-border-color;
+  // Border Radius
+  $border-radius: if($custom-select-border-radius, $custom-select-border-radius, 0);
+  border-radius: $border-radius; // Undo iOS Default;
+}
 
 // Mixin For Icon Set Fonts
 @mixin xq-select-icons($icon-set, $content) {

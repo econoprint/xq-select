@@ -1,4 +1,5 @@
 @import "variables";
+@import "mixins";
 
 // This is the native select, we're making everything but the text invisible so we can see the button styles in the wrapper
 select.xq-select {
@@ -14,6 +15,15 @@ select.xq-select {
   color: $custom-select-color;
   background: $custom-select-bg;
   appearance: none; // Remove select styling
+  // Other Appearance
+  @include border-and-shadow;
+  &::-ms-expand {
+    opacity: 0; // Hides native caret in IE (Note: Pre IE10 will see NO arrow)
+  }
+  &:-moz-focusring {
+    color: transparent;       // Kills odd artifacts around text in Firefox focus
+    text-shadow: 0 0 0 #000;  // https://developer.mozilla.org/en-US/docs/Web/CSS/:-moz-focusring
+  }
   .has-warning &, .has-error &, .has-required &, .has-success & {
     border-color: transparent !important;
   }

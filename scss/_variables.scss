@@ -17,6 +17,9 @@ $custom-select-focus-border-color: #66afe9 !default;
 $custom-select-bg:                 #fff !default;
 $custom-select-disabled-bg:        $gray-lighter !default;
 $custom-select-color:              $gray !default;
+$custom-select-box-shadow:         null !default;
+$custom-select-border-width:       1px !default;
+$custom-select-border-radius:      4px !default;
 
 // Compatibility
 $enable-fallback:           false !default;

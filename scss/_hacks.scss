@@ -12,18 +12,8 @@ x:-o-prefocus, .xq-select-wrapper::after {
 // color to match the focus style's - fix via
 // http://stackoverflow.com/questions/17553300/change-ie-background-color-on-unopened-focused-select-box
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-  select.xq-select::-ms-expand {
-    display: none;
-  }
   select.xq-select:focus::-ms-value {
     background: transparent;
     color: #222;
   }
-}
-
-// Firefox focus has odd artifacts around the text, this kills that.
-// See https://developer.mozilla.org/en-US/docs/Web/CSS/:-moz-focusring
-select.xq-select:-moz-focusring {
-  color: transparent;
-  text-shadow: 0 0 0 #000;
 }
