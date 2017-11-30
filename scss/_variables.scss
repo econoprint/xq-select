@@ -20,6 +20,7 @@ $custom-select-color:              $gray !default;
 $custom-select-box-shadow:         null !default;
 $custom-select-border-width:       1px !default;
 $custom-select-border-radius:      4px !default;
+$custom-select-focus-box-shadow:   inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba($custom-select-focus-border-color, .6) !default;
 
 // Compatibility
 $enable-fallback:           false !default;

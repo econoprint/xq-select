@@ -24,6 +24,17 @@ select.xq-select {
     color: transparent;       // Kills odd artifacts around text in Firefox focus
     text-shadow: 0 0 0 #000;  // https://developer.mozilla.org/en-US/docs/Web/CSS/:-moz-focusring
   }
+  // Focus Styles
+  &:focus {
+    border-color: $custom-select-focus-border-color;
+    outline: none;
+    box-shadow: $custom-select-focus-box-shadow;
+    &::-ms-value {
+      // Suppress focus highlight in Edge/IE
+      color: $custom-select-color;
+      background-color: $custom-select-bg;
+    }
+  }
   .has-warning &, .has-error &, .has-required &, .has-success & {
     border-color: transparent !important;
   }
@@ -62,15 +73,6 @@ select.xq-select {
       }
     }
   }
-}
-
-// Focus style
-select.xq-select:focus {
-  outline: none;
-  box-shadow: $custom-select-focus-box-shadow;
-  background-color: transparent;
-  color: darken($custom-select-color, 10%);
-  border: 1px solid $custom-select-focus-border-color;
 }
 
 @if $enable-fallback {
