@@ -1,7 +1,7 @@
 @import "variables";
 
 // This is the native select, we're making everything but the text invisible so we can see the button styles in the wrapper
-.xq-select select {
+select.xq-select {
   // Sizing
   flex: 1 0 100%;
   max-width: 100%;
@@ -58,7 +58,7 @@
 }
 
 // Focus style
-.xq-select select:focus {
+select.xq-select:focus {
   outline: none;
   box-shadow: none;
   background-color: transparent;
@@ -67,7 +67,7 @@
 }
 
 @if $enable-fallback {
-  .xq-select select {
+  select.xq-select {
     // Sizing
     width: 100%;
     // Prefixed box-sizing rules necessary for older browsers
@@ -79,11 +79,9 @@
 // Automatic Fallback if Using Modernizr or xqDetect
 @if $enable-feature-detection {
   .no-js {
-    .xq-select {
-      select {
-        option, optgroup {
-          display: block !important;
-        }
+    select.xq-select {
+      option, optgroup {
+        display: block !important;
       }
     }
   }

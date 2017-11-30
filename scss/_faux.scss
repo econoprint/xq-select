@@ -2,7 +2,7 @@
 @import "mixins";
 
 // Container used for styling the custom select, the button class below adds the bg gradient, corners, etc.
-.xq-select {
+.xq-select-wrapper {
   position: relative;
   display: flex;
   flex-wrap: nowrap;
@@ -12,7 +12,7 @@
   &:hover {
     border-color: darken($input-border, 10%);
   }
-  select {
+  > select {
     // Make sure the select is behind the faux select
     position: relative;
     z-index: $zindex-select-native;
@@ -45,12 +45,12 @@
 }
 
 @if $enable-fallback {
-  .xq-select {
+  .xq-select-wrapper {
     display: block;
   }
 }
 
-.xq-select::after {
+.xq-select-wrapper::after {
   $content: caret-down;
   @include xq-select-icons($icon-set, $content);
   background-color: transparent;
@@ -81,7 +81,7 @@
   }
 }
 
-.xq-select button {
+.xq-select-wrapper button {
   // The clickable, semi-invisible button for opening dropdown
   position: absolute;
   top: 0;
@@ -95,7 +95,7 @@
 }
 
 @if $enable-baseline {
-  .xq-select button {
+  .xq-select-wrapper button {
     -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
   }
 }

@@ -1,5 +1,5 @@
 $( document ).ready( function () {
-    $( '.xq-select > select' ).xqselect();
+    $( '.xq-select' ).xqselect();
 } );
 
 /**
@@ -218,8 +218,8 @@ $( document ).ready( function () {
 
     $.fn.xqselect.defaultOptions = {
         fauxOption:         '.xq-select-item',
-        trigger:            '.xq-select > select',
-        wrapper:            '.xq-select',
+        trigger:            'select.xq-select',
+        wrapper:            '.xq-select-wrapper',
         templateFauxSelect: '<ul class="dropdown-menu xq-select-dropdown" role="menu"></ul>',
         templateFauxButton: '<button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&nbsp;</button>',
         fauxLimit:          20,
