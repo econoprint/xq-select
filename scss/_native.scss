@@ -13,7 +13,7 @@ select.xq-select {
   height: $custom-select-height;
   // Color & Arrow
   color: $custom-select-color;
-  background: $custom-select-bg;
+  background: $custom-select-bg inline-svg($custom-select-indicator) no-repeat right $custom-select-padding-x center;
   appearance: none; // Remove select styling
   // Other Appearance
   @include border-and-shadow;

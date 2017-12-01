@@ -1,4 +1,5 @@
 // Imports
+@import "strapless/base/scss/base";
 @import "variables/bootstrap-shim";
 
 // Layering
@@ -16,6 +17,11 @@ $custom-select-border-width:       $input-border-width !default;
 $custom-select-border-radius:      $input-border-radius !default;
 $custom-select-focus-box-shadow:   $input-focus-box-shadow !default;
 $custom-select-disabled-color:     $custom-select-color !default;
+$custom-select-indicator-color:    rgba($custom-select-color, 0.5) !default;
+
+// SVG Icon Indicators
+$custom-select-check:              '<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8"><path fill="#{$custom-select-indicator-color}" d="M6.41 0l-.69.72-2.78 2.78-.81-.78-.72-.72-1.41 1.41.72.72 1.5 1.5.69.72.72-.72 3.5-3.5.72-.72-1.44-1.41z" transform="translate(0 1)" /></svg>' !default;
+$custom-select-indicator:          '<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8"><path fill="#{$custom-select-indicator-color}" d="M0 0l4 4 4-4h-8z" transform="translate(0 2)" /></svg>' !default;
 
 // Icons
 $font-weight-medium:        bold  !default;

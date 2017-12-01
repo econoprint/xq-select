@@ -53,6 +53,12 @@
         color: rgba($custom-select-disabled-color, .5);
         cursor: $cursor-disabled;
       }
+      &.selected {
+        background-image: inline-svg($custom-select-check);
+        background-repeat: no-repeat;
+        background-size: ($custom-select-padding-x/2);
+        background-position: ($custom-select-padding-x/4) center;
+      }
       > span {
         opacity: .7;
         font-size: 90%;
