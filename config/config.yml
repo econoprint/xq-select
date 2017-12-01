@@ -10,13 +10,13 @@ pleasing:
       bin: '/usr/local/bin/sassc'
       apply_to: '\.scss$'
       import_paths:
-        - '%kernel.root_dir%/../../vendor'
+        - '%kernel.root_dir%/../vendor'
       output_style: 'expanded'
   assets:
     xqselect_css:
       minify: 'also'
       inputs:
-        - '%kernel.root_dir%/../scss/xq-select.scss'
+        - '%kernel.root_dir%/../scss/_xq-select.scss'
       filters:
         - pleasing_sass
         - pleasing_prefix
