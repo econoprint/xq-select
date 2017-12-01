@@ -1,25 +1,25 @@
 // Base Shims
 $line-height-base:            1.5 !default;
-$font-size-base:              1rem;
-$border-radius:               4px;
+$font-size-base:              1rem !default;
+$border-radius:               if(variable-exists(border-radius-base), $border-radius-base, 4px) !default;
 $zindex-modal:                1050 !default;
 
 // Base Color Shims
 $white:    #fff !default;
-$gray-200: #e9ecef !default;
-$gray-400: #ced4da !default;
-$gray-700: #495057 !default;
+$gray-200: if(variable-exists(gray-lighter), $gray-lighter, #e9ecef) !default;
+$gray-400: if(variable-exists(gray-light), $gray-light, #ced4da) !default;
+$gray-700: if(variable-exists(gray-darker), $gray-dark, #495057) !default;
 $black:    #000 !default;
 $blue:     #007bff !default;
-$primary:  blue !default;
+$primary:  if(variable-exists(brand-primary), $brand-primary, blue) !default;
 
 // Padding and Height Shims
 $input-btn-border-width:      1px !default;
 $input-border-width:          $input-btn-border-width !default;
 $input-border-radius:         $border-radius !default;
 $input-btn-focus-width:       .2rem !default;
-$input-btn-padding-y:         .375rem !default;
-$input-btn-padding-x:         .75rem !default;
+$input-btn-padding-y:         if(variable-exists(input-padding-vertical), $input-padding-vertical, .375rem) !default;
+$input-btn-padding-x:         if(variable-exists(input-padding-horizontal), $input-padding-horizontal, .75rem) !default;
 $input-btn-line-height:       $line-height-base !default;
 $input-height-inner:          ($font-size-base * $input-btn-line-height) + ($input-btn-padding-y * 2) !default;
 $input-height-border:         $input-btn-border-width * 2 !default;
@@ -32,9 +32,9 @@ $input-box-shadow:                      inset 0 1px 1px rgba($black, .075) !defa
 $input-bg:                              $white !default;
 $input-btn-focus-color:                 rgba($primary, .25) !default;
 $input-focus-bg:                        $input-bg !default;
-$input-focus-border-color:              $input-btn-focus-color !default;
+$input-focus-border-color:              if(variable-exists(input-focus-border), $input-focus-border, $input-btn-focus-color) !default;
 $input-focus-color:                     $input-color !default;
 $input-btn-focus-box-shadow:            0 0 0 $input-btn-focus-width $input-btn-focus-color !default;
 $input-focus-width:                     $input-btn-focus-width !default;
 $input-focus-box-shadow:                $input-btn-focus-box-shadow !default;
-$input-disabled-bg:                     $gray-200 !default;
+$input-disabled-bg:                     if(variable-exists(input-bg-disabled), $input-bg-disabled, $gray-200) !default;
