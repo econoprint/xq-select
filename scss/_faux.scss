@@ -5,151 +5,82 @@
 .xq-select-wrapper {
   position:         relative;
   display:          flex;
-  flex-wrap:        nowrap;
   padding:          0;
-  border:           1px solid $custom-select-border-color;
-  background-color: $custom-select-bg;
-  &:hover {
-    border-color: darken($custom-select-border-color, 10%);
-  }
-  > select {
+  margin:           0;
+  border:           none;
+  background-color: transparent;
+  > select.xq-select {
     // Make sure the select is behind the faux select
     position: relative;
     z-index:  $native-select-zindex;
   }
-  // Contextual Borders
-  .has-required & {
-    border-color: $brand-required;
-    &:hover {
-      border-color: darken($brand-required, 10%);
-    }
-  }
-  .has-error & {
-    border-color: $brand-danger;
-    &:hover {
-      border-color: darken($brand-danger, 10%);
-    }
-  }
-  .has-warning & {
-    border-color: $brand-warning;
-    &:hover {
-      border-color: darken($brand-warning, 10%);
-    }
-  }
-  .has-success & {
-    border-color: $brand-success;
-    &:hover {
-      border-color: darken($brand-success, 10%);
-    }
-  }
-}
-
-@if $enable-fallback {
-  .xq-select-wrapper {
-    display: block;
-  }
-}
-
-.xq-select-wrapper::after {
-  $content: caret-down;
-  @include xq-select-icons($icon-set, $content);
-  background-color: transparent;
-  border-left: 1px solid $custom-select-border-color;
-  position: absolute;
-  top: -1px;
-  right: -1px;
-  bottom: 0;
-  padding: $padding-xs-vertical $padding-xs-horizontal;
-  z-index: $zindex-select-arrow;
-  // This hack make the select behind the arrow clickable in some browsers
-  pointer-events:none;
-  // Contextual Borders
-  .has-required & {
-    border-left-color: $brand-required;
-  }
-  .has-error & {
-    border-left-color: $brand-danger;
-    color: $brand-danger;
-  }
-  .has-warning & {
-    border-left-color: $brand-warning;
-    color: $brand-warning;
-  }
-  .has-success & {
-    border-left-color: $brand-success;
-    color: $brand-success;
-  }
-}
-
-.xq-select-wrapper button {
   // The clickable, semi-invisible button for opening dropdown
-  position:   absolute;
-  top:        0;
-  left:       0;
-  bottom:     0;
-  right:      0;
-  width:      100%;
-  background: $custom-select-bg;
-  opacity:    0.0;
-  z-index:    $zindex-select-button;
-}
-
-@if $enable-baseline {
-  .xq-select-wrapper button {
-    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  > button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    background: transparent;
+    opacity: 0.0;
+    z-index: $native-select-zindex + 2;
   }
-}
-
-// Formatting for Faux Selects
-.xq-select-dropdown {
-  background-color: $custom-select-bg;
-  color:            $custom-select-color;
-  border-color:  $custom-select-focus-border-color;
-  // Occupy same space as select, plus wrapper borders.
-  min-width:     100% !important;
-  position:      absolute;
-  left:          -1px;
-  right:         -1px;
-  // Don't grow so big as to overlap important things
-  max-height:    $dropdown-max-height;
-  // Scroll properly if too big
-  overflow-y:    auto;
-  overflow-x:    hidden;
-  text-overflow: ellipsis;
-  white-space:   nowrap;
-  // Stay above other items
-  z-index:       $custom-select-zindex;
-  & > li > a {
-    cursor: pointer;
-    & span {
-      color: $text-muted;
-      margin-left: 10px;
+  > .dropdown-menu {
+    // Color the same as select
+    background-color: $custom-select-bg;
+    color: $custom-select-color;
+    // Occupy Same Space as Offset Borders
+    min-width: 100%;
+    position: absolute;
+    left: (0 - $custom-select-border-width);
+    right: (0 - $custom-select-border-width);
+    max-height: $dropdown-max-height;
+    // Scroll properly if too big
+    overflow-y: scroll;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    // Stay above other items
+    z-index: $custom-select-zindex;
+    > li > a {
+      cursor: pointer;
+      padding: ($custom-select-padding-y / 2) $custom-select-padding-x;
+      &:focus {
+        outline: dotted $custom-select-focus-border-color 1px;
+      }
+      &.disabled {
+        color: rgba($custom-select-disabled-color, .5);
+        cursor: $cursor-disabled;
+      }
+      &.selected {
+        background-image: inline-svg($custom-select-check);
+        background-repeat: no-repeat;
+        background-size: ($custom-select-padding-x/2);
+        background-position: ($custom-select-padding-x/4) center;
+      }
+      > span {
+        opacity: .7;
+        font-size: 90%;
+        margin-left: $custom-select-padding-x;
+        text-shadow: none;
+      }
+    }
+    // Faux Optgroup Display
+    .optgroup {
+      color: darken($custom-select-color, 15%);
+      font-weight: $font-weight-medium;
       text-shadow: none;
+      padding: ($custom-select-padding-y + .25rem) $custom-select-padding-x $custom-select-padding-y $custom-select-padding-x;
+      border-top: 1px dotted $custom-select-border-color !important;
     }
   }
-  // optgroup display
-  .optgroup {
-    color: darken($custom-select-color, 15%);
-    font-weight: normal;
-    text-shadow: none;
-    padding: 6px 20px 3px 20px;
-    border-top: 1px solid $gray-light !important;
-  }
-  .xq-select-item {
-    &.focus {
-      outline: none;
-    }
-    &.selected:before {
-      $content: selected;
-      @include xq-select-icons($icon-set, $content);
-      background-color: transparent;
-      position: relative;
-      margin-left: -15px;
-      margin-right: 5px;
-    }
-    &.disabled {
-      color: $gray-light;
-      cursor: $cursor-disabled;
+}
+
+.touch .xq-select-wrapper {
+  > .dropdown-menu {
+    > li > a {
+      padding: $custom-select-padding-y $custom-select-padding-x;
     }
   }
 }

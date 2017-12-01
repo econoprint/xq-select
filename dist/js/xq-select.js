@@ -1,9 +1,9 @@
 $( document ).ready( function () {
-    $( '.xq-select > select' ).xqselect();
+    $( '.xq-select' ).xqselect();
 } );
 
 /**
- * xqSelect v3.0-dev (https://github.com/exactquery/xq-select)
+ * xqSelect v3.0 (https://github.com/exactquery/xq-select)
  * @author  Aaron M Jones [aaron@jonesiscoding.com]
  * @licence MIT (https://github.com/exactquery/xq-select/blob/master/LICENSE)
  */
@@ -218,8 +218,8 @@ $( document ).ready( function () {
 
     $.fn.xqselect.defaultOptions = {
         fauxOption:         '.xq-select-item',
-        trigger:            '.xq-select > select',
-        wrapper:            '.xq-select',
+        trigger:            'select.xq-select',
+        wrapper:            '.xq-select-wrapper',
         templateFauxSelect: '<ul class="dropdown-menu xq-select-dropdown" role="menu"></ul>',
         templateFauxButton: '<button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&nbsp;</button>',
         fauxLimit:          20,

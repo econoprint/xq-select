@@ -1,45 +1,24 @@
-@import "variables.scss";
+@import "variables";
 
-// Mixin For Icon Set Fonts
-@mixin xq-select-icons($icon-set, $content) {
-  @if $icon-set == native {
-    display: inline-block;
-    font: normal normal normal $font-size-base/$line-height-base sans-serif; // shortening font declaration
-    font-size: inherit;
-    @if $content == caret-down {
-      content: "\0025BE";
-    }
-    @if $content == selected {
-      content: "\002713";
-    }
+/// Remove the unit of a length
+/// @param {Number} $number - Number to remove unit from
+/// @return {Number} - Unitless number
+@function strip-unit($number) {
+  @if type-of($number) == 'number' and not unitless($number) {
+    @return $number / ($number * 0 + 1);
   }
-  @if $icon-set == glyphicons {
-    display: inline-block;
-    position: relative;
-    top: 1px;
-    font: normal normal normal 14px/1 "Glyphicons Halflings"; // shortening font declaration
-    font-size: inherit;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    @if $content == caret-down {
-      content: "\e259";
-    }
-    @if $content == selected {
-      content: "\e067";
-    }
-  }
-  @if $icon-set == fontawesome {
-    display: inline-block;
-    font: normal normal normal 14px/1 FontAwesome; // shortening font declaration
-    font-size: inherit; // can't have font-size inherit on line above, so need to override
-    text-rendering: auto; // optimizelegibility throws things off #1094
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    @if $content == caret-down {
-      content: "\f0d7";
-    }
-    @if $content == selected {
-      content: "\f00c";
-    }
-  }
+
+  @return $number;
+}
+
+@mixin border-and-shadow() {
+  // Shadows
+  $box-shadow: if($custom-select-box-shadow, $custom-select-box-shadow, 0);
+  box-shadow: $box-shadow; // Remove hideous inner shadow on iOS
+  // Border
+  $border-width: if(strip-unit($custom-select-border-width) > 0, $custom-select-border-width, 1px);
+  border: $custom-select-border-width solid $custom-select-border-color;
+  // Border Radius
+  $border-radius: if($custom-select-border-radius, $custom-select-border-radius, 0);
+  border-radius: $border-radius; // Undo iOS Default;
 }

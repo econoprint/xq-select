@@ -1,4 +1,5 @@
 @import "variables";
+@import "mixins";
 
 // This is the native select, we're making everything but the text invisible so we can see the button styles in the wrapper
 select.xq-select {
@@ -12,39 +13,55 @@ select.xq-select {
   height: $custom-select-height;
   // Color & Arrow
   color: $custom-select-color;
-  background: $custom-select-bg;
+  background: $custom-select-bg inline-svg($custom-select-indicator) no-repeat right $custom-select-padding-x center;
   appearance: none; // Remove select styling
-  .has-warning &, .has-error &, .has-required &, .has-success & {
-    border-color: transparent !important;
+  // Other Appearance
+  @include border-and-shadow;
+  &::-ms-expand {
+    opacity: 0; // Hides native caret in IE (Note: Pre IE10 will see NO arrow)
   }
-  &[disabled], &[readonly], fieldset[disabled] & {
+  &:-moz-focusring {
+    color: transparent;       // Kills odd artifacts around text in Firefox focus
+    text-shadow: 0 0 0 #000;  // https://developer.mozilla.org/en-US/docs/Web/CSS/:-moz-focusring
+  }
+  // Focus Styles
+  &:focus {
+    border-color: $custom-select-focus-border-color;
+    outline: none;
+    box-shadow: $custom-select-focus-box-shadow;
+    &::-ms-value {
+      // Suppress focus highlight in Edge/IE
+      color: $custom-select-color;
+      background-color: $custom-select-bg;
+    }
+  }
+  // Disabled Styles
+  &:disabled, fieldset[disabled] &, &[read-only] {
+    color: $custom-select-disabled-color;
     background-color: $custom-select-disabled-bg;
-    opacity: 1; // iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655
+    opacity: 1; // iOS fix for unreadable disabled content; see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Input#Browser_compatibility
+
   }
-  &[disabled], fieldset[disabled] & {
+  &:disabled, fieldset[disabled] {
     cursor: $cursor-disabled;
   }
-  option {
-    padding: $custom-select-padding-y $custom-select-padding-x;
+  // Options
+  > option {
     color: $custom-select-color;
     text-shadow: none;
     span {
       color: rgba($custom-select-color, .7);
       text-shadow: none;
     }
-    &[disabled] {
-      cursor: $cursor-disabled;
-      color: $custom-select-disabled-color;
-      opacity: 1; // iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655
-    }
   }
-  optgroup {
+  // Optgroups
+  > optgroup {
     border-top: 1px solid $custom-select-border-color;
     color: darken($custom-select-color, 15%);
     padding: $custom-select-padding-y $custom-select-padding-x;
     margin: 0;
     text-shadow: none;
-    option {
+    > option {
       margin: 0 -$custom-select-padding-x;
       padding: $custom-select-padding-y $custom-select-padding-x;
       &:first-child {
@@ -54,32 +71,8 @@ select.xq-select {
   }
 }
 
-// Focus style
-select.xq-select:focus {
-  outline: none;
-  box-shadow: $custom-select-focus-box-shadow;
-  background-color: transparent;
-  color: darken($custom-select-color, 10%);
-  border: 1px solid $custom-select-focus-border-color;
-}
-
-@if $enable-fallback {
-  select.xq-select {
-    // Sizing
-    width: 100%;
-    // Prefixed box-sizing rules necessary for older browsers
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-  }
-}
-
-// Automatic Fallback if Using Modernizr or xqDetect
-@if $enable-feature-detection {
-  .no-js {
-    select.xq-select {
-      option, optgroup {
-        display: block !important;
-      }
-    }
-  }
+// OPERA - Pre-Blink nix the custom arrow, go with a native select button to keep it simple.
+// Targeted via this hack http://browserhacks.com/#hack-a3f166304aafed524566bc6814e1d5c7
+x:-o-prefocus, select.xq-select {
+  background-image: none;
 }
