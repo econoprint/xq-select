@@ -7,9 +7,9 @@ $custom-select-zindex:      $zindex-modal + 10 !default;            // must be h
 $native-select-zindex:      1 !default;                             // for the native select box to be behind the faux select
 
 // Colors
-$custom-select-border-color:       #ccc !default;
-$custom-select-focus-border-color: #66afe9 !default;
-$custom-select-bg:                 #fff !default;
+$custom-select-border-color:       $input-border-color !default;
+$custom-select-focus-border-color: $input-focus-border-color !default;
+$custom-select-bg:                 $input-bg !default;
 $custom-select-disabled-bg:        $input-disabled-bg !default;
 $custom-select-color:              $input-color !default;
 $custom-select-box-shadow:         $input-box-shadow !default;
