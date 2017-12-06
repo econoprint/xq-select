@@ -22,9 +22,20 @@
     bottom: 0;
     right: 0;
     width: 100%;
-    background: transparent;
+    background: transparent !important; // Protect against inheritance making this visible.
     opacity: 0.0;
     z-index: $native-select-zindex + 2;
+    // Focus Styles - Receives the tabindex via JS, thus can show focus.
+    &:focus {
+      border-color: $custom-select-focus-border-color;
+      outline: none;
+      box-shadow: $custom-select-focus-box-shadow;
+      &::-ms-value {
+        // Suppress focus highlight in Edge/IE
+        color: $custom-select-color;
+        background-color: $custom-select-bg;
+      }
+    }
   }
   > .dropdown-menu {
     // Color the same as select
@@ -54,6 +65,7 @@
         cursor: $cursor-disabled;
       }
       &.selected {
+        // We're not using shorthand here because it would override the background color.
         background-image: inline-svg($custom-select-check);
         background-repeat: no-repeat;
         background-size: ($custom-select-padding-x/2);
