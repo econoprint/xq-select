@@ -1,5 +1,5 @@
 /**
- * xqSelect v3.1 (https://github.com/exactquery/xq-select)
+ * xqSelect v3.1.1 (https://github.com/exactquery/xq-select)
  * @author  Aaron M Jones [aaron@jonesiscoding.com]
  * @licence MIT (https://github.com/exactquery/xq-select/blob/master/LICENSE)
  */

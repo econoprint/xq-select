@@ -1,5 +1,5 @@
 /**
- * xqSelect v3.1 (https://github.com/exactquery/xq-select)
+ * xqSelect v3.1.1 (https://github.com/exactquery/xq-select)
  * @author  Aaron M Jones [aaron@jonesiscoding.com]
  * @licence MIT (https://github.com/exactquery/xq-select/blob/master/LICENSE)
  */
@@ -112,9 +112,20 @@ x:-o-prefocus, select.xq-select {
   bottom: 0;
   right: 0;
   width: 100%;
-  background: transparent;
+  background: transparent !important;
   opacity: 0.0;
   z-index: 3;
+}
+
+.xq-select-wrapper > button:focus {
+  border-color: rgba(0, 0, 255, 0.25);
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(0, 0, 255, 0.25);
+}
+
+.xq-select-wrapper > button:focus::-ms-value {
+  color: #495057;
+  background-color: #fff;
 }
 
 .xq-select-wrapper > .dropdown-menu {
