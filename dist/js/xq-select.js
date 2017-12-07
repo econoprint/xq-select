@@ -1,6 +1,6 @@
 /**
- * xqSelect v3.1.1 (https://github.com/exactquery/xq-select)
- * @author  Aaron M Jones [aaron@jonesiscoding.com]
+ * xqSelect v3.1.2 (https://github.com/exactquery/xq-select)
+ * @author  AMJones [am@jonesiscoding.com]
  * @licence MIT (https://github.com/exactquery/xq-select/blob/master/LICENSE)
  */
 ;(function($) {
@@ -68,7 +68,7 @@
       var $dropdown = $obj.parents( plugin.sel.dropdown );
       if(!$obj.hasClass('disabled')) {
         $target.val($obj.attr('data-value'));
-        $dropdown.children('li').removeClass('selected');
+        $dropdown.find(plugin.sel.option).removeClass('selected');
         $obj.addClass('selected');
         $target.trigger('change');
       }

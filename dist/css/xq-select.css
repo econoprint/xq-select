@@ -1,6 +1,6 @@
 /**
- * xqSelect v3.1.1 (https://github.com/exactquery/xq-select)
- * @author  Aaron M Jones [aaron@jonesiscoding.com]
+ * xqSelect v3.1.2 (https://github.com/exactquery/xq-select)
+ * @author  AMJones [am@jonesiscoding.com]
  * @licence MIT (https://github.com/exactquery/xq-select/blob/master/LICENSE)
  */
 select.xq-select {
@@ -114,10 +114,12 @@ x:-o-prefocus, select.xq-select {
   width: 100%;
   background: transparent !important;
   opacity: 0.0;
+  border-radius: 4px;
   z-index: 3;
 }
 
 .xq-select-wrapper > button:focus {
+  opacity: 1;
   border-color: rgba(0, 0, 255, 0.25);
   outline: none;
   box-shadow: 0 0 0 0.2rem rgba(0, 0, 255, 0.25);
