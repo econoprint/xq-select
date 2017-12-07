@@ -24,9 +24,11 @@
     width: 100%;
     background: transparent !important; // Protect against inheritance making this visible.
     opacity: 0.0;
+    border-radius: $custom-select-border-radius;
     z-index: $native-select-zindex + 2;
     // Focus Styles - Receives the tabindex via JS, thus can show focus.
     &:focus {
+      opacity: 1; // Must change opacity otherwise it's invisible!
       border-color: $custom-select-focus-border-color;
       outline: none;
       box-shadow: $custom-select-focus-box-shadow;
