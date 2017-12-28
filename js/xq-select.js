@@ -1,5 +1,5 @@
 /**
- * xqSelect v3.1.2 (https://github.com/exactquery/xq-select)
+ * xqSelect v3.1.3 (https://github.com/exactquery/xq-select)
  * @author  AMJones [am@jonesiscoding.com]
  * @licence MIT (https://github.com/exactquery/xq-select/blob/master/LICENSE)
  */
@@ -33,11 +33,10 @@
 
       $.each(plugin.settings.cls, function(key,val) { plugin.sel[key] = '.' + val; });
 
-      var use = (
-          plugin.$el.attr('data-native') !== 'true') &&
-          !(plugin.$el.prop('disabled') || plugin.$el.prop('readonly') &&
-              !(isMobile() && plugin.$el.attr('data-mobile') !== 'true' )
-          );
+      var use = (plugin.$el.attr('data-native') !== 'true') &&
+          !(plugin.$el.prop('disabled') || plugin.$el.prop('readonly')) &&
+          (!isMobile() || plugin.$el.attr('data-mobile') === 'true')
+      ;
 
       if (use) {
         var $wrapper = createWrapper();
