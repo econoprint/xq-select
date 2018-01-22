@@ -1,5 +1,5 @@
 /**
- * xqSelect v3.1.2 (https://github.com/exactquery/xq-select)
+ * xqSelect v3.1.4 (https://github.com/exactquery/xq-select)
  * @author  AMJones [am@jonesiscoding.com]
  * @licence MIT (https://github.com/exactquery/xq-select/blob/master/LICENSE)
  */
@@ -33,27 +33,14 @@
 
       $.each(plugin.settings.cls, function(key,val) { plugin.sel[key] = '.' + val; });
 
-      var use = (
-          plugin.$el.attr('data-native') !== 'true') &&
-          !(plugin.$el.prop('disabled') || plugin.$el.prop('readonly') &&
-              !(isMobile() && plugin.$el.attr('data-mobile') !== 'true' )
-          );
+      var use = (plugin.$el.attr('data-native') !== 'true') &&
+          !(plugin.$el.prop('disabled') || plugin.$el.prop('readonly')) &&
+          (!isMobile() || plugin.$el.attr('data-mobile') === 'true')
+      ;
 
       if (use) {
-        var $wrapper = createWrapper();
-        $wrapper
-            .append(
-                $('<button>&nbsp;</button>')
-                    .attr($.extend({}, plugin.settings.attr.toggle, {'tabindex': plugin.$el.attr('tabindex') || 0 }))
-                    .addClass(plugin.settings.cls.toggle)
-            )
-            .append(
-                addOptions(
-                    $('<ul></ul>').attr(plugin.settings.attr.dropdown)
-                        .addClass(plugin.settings.cls.dropdown)
-                )
-            )
-        ;
+        render();
+        plugin.$el.on('xq.select.refresh', function(e) { render(); });
       }
     };
 
@@ -119,6 +106,23 @@
     plugin.closeDropDown = function(obj) {
       $( obj ).parent( plugin.sel.wrapper ).removeClass( 'open' );
       $( obj ).prev( plugin.sel.toggle ).attr( 'aria-expanded', false );
+    };
+
+    var render = function() {
+      var $wrapper = createWrapper();
+      $wrapper
+          .append(
+              $('<button>&nbsp;</button>')
+                  .attr($.extend({}, plugin.settings.attr.toggle, {'tabindex': plugin.$el.attr('tabindex') || 0 }))
+                  .addClass(plugin.settings.cls.toggle)
+          )
+          .append(
+              addOptions(
+                  $('<ul></ul>').attr(plugin.settings.attr.dropdown)
+                      .addClass(plugin.settings.cls.dropdown)
+              )
+          )
+      ;
     };
 
     var addOptions = function($dropdown) {
