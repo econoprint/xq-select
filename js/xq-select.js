@@ -19,8 +19,7 @@
         toggle:   { 'type': 'button', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false'}
       },
       fauxOptionDefault:  '--',
-      mobile: false,
-      native: false
+      mobile: false
     };
 
     var plugin = this;
@@ -36,9 +35,9 @@
       $.each(plugin.settings.api, function(k,v) { var data = plugin.$el.data(v); plugin.settings[v] = data || plugin.settings[v] || null; });
       $.each(plugin.settings.cls, function(key,val) { plugin.sel[key] = '.' + val; });
 
-      var use = (plugin.settings.native !== 'true') &&
+      var use = (plugin.$el.attr('data-native') !== 'true') &&
           !(plugin.$el.prop('disabled') || plugin.$el.prop('readonly')) &&
-          (!isMobile() || plugin.settings.mobile === 'true')
+          (!isMobile() || plugin.$el.attr('data-mobile') === 'true')
       ;
 
       if (use) {
@@ -120,11 +119,15 @@
                   .addClass(plugin.settings.cls.toggle)
           )
           .append(
-              addOptions(
-                  $('<ul></ul>').attr(plugin.settings.attr.dropdown)
-                      .addClass(plugin.settings.cls.dropdown)
-              )
+              addOptions( createDropdown() )
           )
+      ;
+    };
+
+    var createDropdown = function () {
+      return $( '<ul></ul>' )
+          .attr( plugin.settings.attr.dropdown )
+          .addClass( plugin.settings.cls.dropdown )
       ;
     };
 
