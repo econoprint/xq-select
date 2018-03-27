@@ -6,8 +6,8 @@
 ;(function($) {
 
   $.xqselect = function(el, options) {
-
     var defaults = {
+      api: ['mobile'],
       cls: {
         wrapper:  'xq-select-wrapper',
         dropdown: 'dropdown-menu',
@@ -18,7 +18,9 @@
         dropdown: { 'role': 'menu' },
         toggle:   { 'type': 'button', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false'}
       },
-      fauxOptionDefault:  '--'
+      fauxOptionDefault:  '--',
+      mobile: false,
+      native: false
     };
 
     var plugin = this;
@@ -27,15 +29,16 @@
     plugin.sel = {};
 
     var init = function() {
-      plugin.settings = $.extend({}, defaults, options);
       /** @type jQuery */
-      plugin.$el = $(el);
+      plugin.$el      = $( el );
+      plugin.settings = $.extend( {}, defaults, options );
 
+      $.each(plugin.settings.api, function(k,v) { var data = plugin.$el.data(v); plugin.settings[v] = data || plugin.settings[v] || null; });
       $.each(plugin.settings.cls, function(key,val) { plugin.sel[key] = '.' + val; });
 
-      var use = (plugin.$el.attr('data-native') !== 'true') &&
+      var use = (plugin.settings.native !== 'true') &&
           !(plugin.$el.prop('disabled') || plugin.$el.prop('readonly')) &&
-          (!isMobile() || plugin.$el.attr('data-mobile') === 'true')
+          (!isMobile() || plugin.settings.mobile === 'true')
       ;
 
       if (use) {
