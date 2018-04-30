@@ -8,7 +8,7 @@
         "sass"
     ],
     "homepage": "https://github.com/exactquery/xq-select",
-    "version": "3.1.4",
+    "version": "3.2",
     "authors": [
         {
             "name": "AMJones",
@@ -18,6 +18,7 @@
     "license": "MIT",
     "require": {
         "components/jquery": "^1.10",
-        "strapless/base": "^1.1.4"
+        "strapless/base": "^1.1.4",
+        "exactquery/searchable": "^2.0"
     }
 }

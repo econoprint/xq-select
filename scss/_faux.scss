@@ -88,6 +88,24 @@
       padding: ($custom-select-padding-y + .25rem) $custom-select-padding-x $custom-select-padding-y $custom-select-padding-x;
       border-top: 1px dotted $custom-select-border-color !important;
     }
+    // Filter
+    .xq-filter {
+      line-height: $input-btn-line-height;
+      margin: $custom-select-padding-y $custom-select-padding-x;
+      background-color: rgba(#000,.05);
+      border: 1px solid transparent;
+      box-shadow: none;
+      height: $input-height;
+      padding: $input-btn-padding-y $input-btn-padding-x;
+      width: calc(100% - #{$custom-select-padding-x*2});
+      &:focus {
+        outline: 0;
+        border-color: $input-focus-border-color;
+      }
+    }
+    .xq-filtered {
+      display: none !important;
+    }
   }
 }
 

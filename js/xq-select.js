@@ -1,5 +1,5 @@
 /**
- * xqSelect v3.1.4 (https://github.com/exactquery/xq-select)
+ * xqSelect v3.2 (https://github.com/exactquery/xq-select)
  * @author  AMJones [am@jonesiscoding.com]
  * @licence MIT (https://github.com/exactquery/xq-select/blob/master/LICENSE)
  */
@@ -7,7 +7,7 @@
 
   $.xqselect = function(el, options) {
     var defaults = {
-      api: ['mobile'],
+      api: ['mobile','filter'],
       cls: {
         wrapper:  'xq-select-wrapper',
         dropdown: 'dropdown-menu',
@@ -125,10 +125,28 @@
     };
 
     var createDropdown = function () {
-      return $( '<ul></ul>' )
+      var $dd = $( '<ul></ul>' )
           .attr( plugin.settings.attr.dropdown )
           .addClass( plugin.settings.cls.dropdown )
       ;
+
+      if(plugin.settings.filter) {
+        var $sb = $('<input type="text" class="xq-filter" />');
+        $sb.searchField({
+          search: function(q) {
+            $.fn.domSearch($dd.find('li'),q,function(el,has) {
+              $(el).toggleClass('xq-filtered', !has);
+            })
+          },
+          clear: function() {
+            $dd.find( 'li' ).removeClass( 'xq-filtered' );
+          }
+        });
+
+        $sb.appendTo( '<li></li>' ).appendTo( $dd );
+      }
+
+      return $dd;
     };
 
     var addOptions = function($dropdown) {
