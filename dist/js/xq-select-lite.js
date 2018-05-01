@@ -1,5 +1,5 @@
 /**
- * xqSelect v3.2 (https://github.com/exactquery/xq-select)
+ * xqSelect v3.3 (https://github.com/exactquery/xq-select)
  * @author  AMJones [am@jonesiscoding.com]
  * @licence MIT (https://github.com/exactquery/xq-select/blob/master/LICENSE)
  */
@@ -7,7 +7,7 @@
 
   $.xqselect = function(el, options) {
     var defaults = {
-      api: ['mobile','filter'],
+      api: ['mobile','filter','characters'],
       cls: {
         wrapper:  'xq-select-wrapper',
         dropdown: 'dropdown-menu',
@@ -19,7 +19,8 @@
         toggle:   { 'type': 'button', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false'}
       },
       fauxOptionDefault:  '--',
-      mobile: false
+      mobile: false,
+      characters: 2
     };
 
     var plugin = this;
@@ -151,7 +152,8 @@
           },
           clear: function() {
             $dd.find( 'li' ).removeClass( 'xq-filtered' );
-          }
+          },
+          minCharacter: plugin.settings.characters
         });
 
         $wrapper.append( $sb );

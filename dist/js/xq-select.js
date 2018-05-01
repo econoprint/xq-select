@@ -171,7 +171,7 @@ jQuery.fn.extend( {
   }
 } );
 /**
- * xqSelect v3.2 (https://github.com/exactquery/xq-select)
+ * xqSelect v3.3 (https://github.com/exactquery/xq-select)
  * @author  AMJones [am@jonesiscoding.com]
  * @licence MIT (https://github.com/exactquery/xq-select/blob/master/LICENSE)
  */
@@ -179,7 +179,7 @@ jQuery.fn.extend( {
 
   $.xqselect = function(el, options) {
     var defaults = {
-      api: ['mobile','filter'],
+      api: ['mobile','filter','characters'],
       cls: {
         wrapper:  'xq-select-wrapper',
         dropdown: 'dropdown-menu',
@@ -191,7 +191,8 @@ jQuery.fn.extend( {
         toggle:   { 'type': 'button', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false'}
       },
       fauxOptionDefault:  '--',
-      mobile: false
+      mobile: false,
+      characters: 2
     };
 
     var plugin = this;
@@ -323,7 +324,8 @@ jQuery.fn.extend( {
           },
           clear: function() {
             $dd.find( 'li' ).removeClass( 'xq-filtered' );
-          }
+          },
+          minCharacter: plugin.settings.characters
         });
 
         $wrapper.append( $sb );
