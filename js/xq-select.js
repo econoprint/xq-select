@@ -1,5 +1,5 @@
 /**
- * xqSelect v3.2 (https://github.com/exactquery/xq-select)
+ * xqSelect v3.3 (https://github.com/exactquery/xq-select)
  * @author  AMJones [am@jonesiscoding.com]
  * @licence MIT (https://github.com/exactquery/xq-select/blob/master/LICENSE)
  */
@@ -74,6 +74,19 @@
       if(e.which === 13) {
         e.preventDefault();
         $( obj ).click();
+      } else if(e.which === 40) {
+        plugin.$el.closest(plugin.sel.wrapper).find('li:not(.xq-filtered)').first().find('a').focus();
+      } else {
+        plugin.$el.siblings( '.xq-filter' ).first().focus();
+      }
+    };
+
+    plugin.onClose = function(e, obj) {
+      var $dd = $(e.target);
+      $dd.removeClass("dropup");
+      if(plugin.settings.filter) {
+        $dd.find( 'li.xq-filtered' ).removeClass( 'xq-filtered' );
+        $dd.closest( plugin.sel.wrapper ).find( '.xq-filter' ).val('');
       }
     };
 
@@ -119,19 +132,17 @@
                   .addClass(plugin.settings.cls.toggle)
           )
           .append(
-              addOptions( createDropdown() )
+              addOptions(
+                  $( '<ul></ul>' )
+                      .attr( plugin.settings.attr.dropdown )
+                      .addClass( plugin.settings.cls.dropdown )
+              )
           )
-      ;
-    };
-
-    var createDropdown = function () {
-      var $dd = $( '<ul></ul>' )
-          .attr( plugin.settings.attr.dropdown )
-          .addClass( plugin.settings.cls.dropdown )
       ;
 
       if(plugin.settings.filter) {
-        var $sb = $('<input type="text" class="xq-filter" />');
+        var $sb = $('<input type="text" class="xq-filter" tabindex="-1" placeholder="Type to Filter" />');
+        var $dd = plugin.$el.parent(plugin.sel.wrapper).find(plugin.sel.dropdown);
         $sb.searchField({
           search: function(q) {
             $.fn.domSearch($dd.find('li'),q,function(el,has) {
@@ -143,10 +154,9 @@
           }
         });
 
-        $sb.appendTo( '<li></li>' ).appendTo( $dd );
+        $wrapper.append( $sb );
       }
 
-      return $dd;
     };
 
     var addOptions = function($dropdown) {
@@ -245,9 +255,10 @@
       return $wrapper
           .off()
           .on( 'shown.bs.dropdown', function(e) { plugin.onOpen(e, this); } )
-          .on( 'hidden.bs.dropdown', function(e) { $(e.target).removeClass("dropup"); })
+          .on( 'hidden.bs.dropdown', function(e) { plugin.onClose(e, this); })
           .on( 'keydown', plugin.sel.dropdown, function(e) { if( e.which === 9 ) { plugin.closeDropDown(this); } } )
           .on( 'keydown', plugin.sel.option, function(e) { plugin.onKeyDown( e, this); } )
+          .on( 'keydown', '.xq-filter', function(e) { plugin.onKeyDown( e, this); } )
           .on( 'click', plugin.sel.option, function() { plugin.onClick(this); } )
           ;
     };

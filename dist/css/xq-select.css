@@ -115,7 +115,7 @@ x:-o-prefocus, select.xq-select {
   background: transparent !important;
   opacity: 0.0;
   border-radius: 4px;
-  z-index: 3;
+  z-index: 4;
 }
 
 .xq-select-wrapper > button:focus {
@@ -181,24 +181,35 @@ x:-o-prefocus, select.xq-select {
   border-top: 1px dotted #ced4da !important;
 }
 
-.xq-select-wrapper > .dropdown-menu .xq-filter {
-  line-height: 1.5;
-  margin: 0.375rem 0.75rem;
-  background-color: rgba(0, 0, 0, 0.05);
-  border: 1px solid transparent;
-  box-shadow: none;
-  height: calc(2.25rem + 2px);
-  padding: 0.375rem 0.75rem;
-  width: calc(100% - 1.5rem);
-}
-
-.xq-select-wrapper > .dropdown-menu .xq-filter:focus {
-  outline: 0;
-  border-color: rgba(0, 0, 255, 0.25);
-}
-
 .xq-select-wrapper > .dropdown-menu .xq-filtered {
   display: none !important;
+}
+
+.xq-select-wrapper > .dropdown-menu:focus-within + .xq-filter {
+  opacity: 1;
+}
+
+.xq-select-wrapper .xq-filter {
+  background-color: #fff;
+  color: #495057;
+  opacity: 0;
+  position: absolute;
+  top: 1px;
+  bottom: 1px;
+  left: 1px;
+  right: 1px;
+  border: none;
+  width: calc(100% - 3rem);
+  box-shadow: none;
+  z-index: 3;
+  padding: 0.375rem 0.75rem;
+}
+
+.xq-select-wrapper .xq-filter:focus {
+  outline: 0 !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+  opacity: 1 !important;
 }
 
 .touch .xq-select-wrapper > .dropdown-menu > li > a {
