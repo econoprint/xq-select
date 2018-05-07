@@ -1,24 +1,28 @@
 {
-    "name": "exactquery/xq-select",
+    "name": "deviscoding/xq-select",
     "description": "Cross browser <select> implementation using CSS, JQuery, and Twitter Bootstrap.",
     "keywords": [
         "bootstrap",
         "select",
         "replacement",
-        "sass"
+        "sass",
+        "exactquery"
     ],
-    "homepage": "https://github.com/exactquery/xq-select",
-    "version": "3.3",
+    "replace": {
+        "exactquery/xq-select": "^2.0"
+    },
+    "homepage": "https://github.com/jonesiscoding/xq-select",
+    "version": "3.3.1",
     "authors": [
         {
             "name": "AMJones",
-            "homepage": "https://github.com/exactquery"
+            "homepage": "https://www.deviscoding.com/"
         }
     ],
     "license": "MIT",
     "require": {
         "components/jquery": "^1.10",
         "strapless/base": "^1.1.4",
-        "exactquery/searchable": "^2.0"
+        "deviscoding/searchable": "^2.0"
     }
 }
