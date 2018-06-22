@@ -1,5 +1,5 @@
 /**
- * xqSelect v3.3 (https://github.com/exactquery/xq-select) with Icons from Open Iconic (https://useiconic.com/open)
+ * xqSelect v3.3.2 (https://github.com/exactquery/xq-select) with Icons from Open Iconic (https://useiconic.com/open)
  * @author  AMJones [am@jonesiscoding.com]
  * @licence MIT (https://github.com/exactquery/xq-select/blob/master/LICENSE)
  */
@@ -8,7 +8,7 @@ select.xq-select {
   -ms-flex: 1 0 auto;
   flex: 1 0 auto;
   max-width: 100%;
-  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
   -ms-flex-align: center;
