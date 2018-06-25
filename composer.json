@@ -12,7 +12,7 @@
         "exactquery/xq-select": "^2.0"
     },
     "homepage": "https://github.com/jonesiscoding/xq-select",
-    "version": "3.3.2",
+    "version": "3.3.3",
     "authors": [
         {
             "name": "AMJones",
@@ -22,7 +22,7 @@
     "license": "MIT",
     "require": {
         "components/jquery": "^1.10",
-        "deviscoding/base": "^2.0",
+        "deviscoding/base": "^1.1.4",
         "deviscoding/searchable": "^2.0"
     }
 }

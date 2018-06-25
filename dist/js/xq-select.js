@@ -1,7 +1,7 @@
 /**
- * Configures the given element as a search field, performing the given callbacks on search & clear.
- *
- * @returns {jQuery}
+ * xqSelect v3.3.3 (https://github.com/exactquery/xq-select)
+ * @author  AMJones [am@jonesiscoding.com]
+ * @licence MIT (https://github.com/exactquery/xq-select/blob/master/LICENSE)
  */
 ;(function($) {
 
@@ -135,12 +135,6 @@
     });
   }
 })(jQuery);
-
-/**
- * Searches the given selector for the given text value, then performs the given callback.
- *
- * @returns {jQuery}
- */
 jQuery.fn.extend( {
   domSearch: function ( sel, value, callback ) {
     var ds = this;
@@ -170,11 +164,6 @@ jQuery.fn.extend( {
     });
   }
 } );
-/**
- * xqSelect v3.3.2 (https://github.com/exactquery/xq-select)
- * @author  AMJones [am@jonesiscoding.com]
- * @licence MIT (https://github.com/exactquery/xq-select/blob/master/LICENSE)
- */
 ;(function($) {
 
   $.xqselect = function(el, options) {
