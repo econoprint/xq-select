@@ -16,7 +16,7 @@ select.xq-select {
   -webkit-align-items: center;
   align-items: center;
   margin: 0;
-  padding: 0 0.75rem;
+  padding: 0 1.5rem 0 0.75rem;
   height: calc(2.25rem + 2px);
   color: #495057;
   background: #fff url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%228%22%20height%3D%228%22%20viewBox%3D%220%200%208%208%22%3E%3Cpath%20fill%3D%22rgba%2873%2C%2080%2C%2087%2C%200.5%29%22%20d%3D%22M0%200l4%204%204-4h-8z%22%20transform%3D%22translate%280%202%29%22%20%2F%3E%3C%2Fsvg%3E") no-repeat right 0.75rem center;
