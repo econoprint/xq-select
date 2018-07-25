@@ -9,11 +9,11 @@ select.xq-select {
   display: inline-flex;
   align-items: center;
   margin: 0;
-  padding: 0 $custom-select-padding-x*2 0 $custom-select-padding-x;
+  padding: 0 calc(#{$custom-select-padding-x} + 8px) 0 $custom-select-padding-x;
   height: $custom-select-height;
   // Color & Arrow
   color: $custom-select-color;
-  background: $custom-select-bg inline-svg($custom-select-indicator) no-repeat right $custom-select-padding-x center;
+  background: $custom-select-bg inline-svg($custom-select-indicator) no-repeat right $custom-select-padding-x/2 center;
   appearance: none; // Remove select styling
   // Other Appearance
   @include border-and-shadow;
