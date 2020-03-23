@@ -1,0 +1,33 @@
+pleasing:
+  assets:
+    xq_select_css:
+      inputs:
+        - "scss/_xq-select.scss"
+      output: "dist/css/xq-select.css"
+    xq_select_css_min:
+      filters: ['minify']
+      inputs:
+        - "scss/_xq-select.scss"
+      output: "dist/css/xq-select.min.css"
+    xq_select_js:
+      inputs:
+        - "vendor/deviscoding/searchable/src/js/search-field.js"
+        - "vendor/deviscoding/searchable/src/js/dom-search.js"
+        - "js/xq-select.js"
+      output: "dist/js/xq-select.js"        
+    xq_select_js_lite:
+      inputs:
+        - "js/xq-select.js"
+      output: "dist/js/xq-select-lite.js"
+    xq_select_js_min:
+      filters: ['minify']
+      inputs:
+        - "vendor/deviscoding/searchable/src/js/search-field.js"
+        - "vendor/deviscoding/searchable/src/js/dom-search.js"
+        - "js/xq-select.js"
+      output: "dist/js/xq-select.min.js"
+    xq_select_js_lite_min:
+      filters: ['minify']
+      inputs:
+        - "js/xq-select.js"    
+      output: "dist/js/xq-select-lite.min.js"

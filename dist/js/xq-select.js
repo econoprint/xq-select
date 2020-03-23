@@ -171,7 +171,7 @@ jQuery.fn.extend( {
   }
 } );
 /**
- * xqSelect v3.3.3 (https://github.com/exactquery/xq-select)
+ * xqSelect v4.0 (https://github.com/exactquery/xq-select)
  * @author  AMJones [am@jonesiscoding.com]
  * @licence MIT (https://github.com/exactquery/xq-select/blob/master/LICENSE)
  */
@@ -184,7 +184,8 @@ jQuery.fn.extend( {
         wrapper:  'xq-select-wrapper',
         dropdown: 'dropdown-menu',
         toggle:   'dropdown-toggle',
-        option:   'xq-select-item'
+        option:   'xq-select-item',
+        show:     'show'
       },
       attr: {
         dropdown: { 'role': 'menu' },
@@ -241,14 +242,14 @@ jQuery.fn.extend( {
      * Called when a key is pressed while a faux select option is in focus.
      *
      * @param e       The event that triggered this.
-     * @param obj     The faux select option (li > a).
+     * @param obj     The faux select option (.dropdown-item).
      */
     plugin.onKeyDown = function(e,obj) {
       if(e.which === 13) {
         e.preventDefault();
         $( obj ).click();
       } else if(e.which === 40) {
-        plugin.$el.closest(plugin.sel.wrapper).find('li:not(.xq-filtered)').first().find('a').focus();
+        plugin.$el.closest(plugin.sel.wrapper).find('.dropdown-item:not(.xq-filtered)').focus();
       } else {
         plugin.$el.siblings( '.xq-filter' ).first().focus();
       }
@@ -256,32 +257,18 @@ jQuery.fn.extend( {
 
     plugin.onClose = function(e, obj) {
       var $dd = $(e.target);
-      $dd.removeClass("dropup");
       if(plugin.settings.filter) {
-        $dd.find( 'li.xq-filtered' ).removeClass( 'xq-filtered' );
+        $dd.find( '.xq-filtered' ).removeClass( 'xq-filtered' );
         $dd.closest( plugin.sel.wrapper ).find( '.xq-filter' ).val('');
       }
     };
 
     /**
      * Called when a faux select is opened.
-     * @source Zoltán Tamási
      * @param e
      * @param obj
      */
     plugin.onOpen = function(e, obj) {
-      /** @type jQuery */
-      var $txqs = $(e.target);
-      /** @type jQuery */
-      var $window = $(window);
-      var $ul = $txqs.children(plugin.sel.dropdown);
-      var $button = $txqs.children(plugin.sel.toggle);
-      var ulOffset = $ul.offset() || 0;
-      var spaceUp = (ulOffset.top - $button.height() - $ul.height()) - $window.scrollTop();
-      var spaceDown = $window.scrollTop() + $window.height() - (ulOffset.top + $ul.height());
-      if (spaceDown < 0 && (spaceUp >= 0 || spaceUp > spaceDown)) {
-        $txqs.addClass('dropup');
-      }
       $( obj ).find(plugin.sel.option + '.selected' ).focus();
     };
 
@@ -292,7 +279,7 @@ jQuery.fn.extend( {
      * @param obj The faux select object (ul)
      */
     plugin.closeDropDown = function(obj) {
-      $( obj ).parent( plugin.sel.wrapper ).removeClass( 'open' );
+      $( obj ).parent( plugin.sel.wrapper ).removeClass( plugin.settings.cls.show );
       $( obj ).prev( plugin.sel.toggle ).attr( 'aria-expanded', false );
     };
 
@@ -306,7 +293,7 @@ jQuery.fn.extend( {
           )
           .append(
               addOptions(
-                  $( '<ul></ul>' )
+                  $( '<div></div>' )
                       .attr( plugin.settings.attr.dropdown )
                       .addClass( plugin.settings.cls.dropdown )
               )
@@ -318,12 +305,12 @@ jQuery.fn.extend( {
         var $dd = plugin.$el.parent(plugin.sel.wrapper).find(plugin.sel.dropdown);
         $sb.searchField({
           search: function(q) {
-            $.fn.domSearch($dd.find('li'),q,function(el,has) {
+            $.fn.domSearch($dd.find('.dropdown-item'),q,function(el,has) {
               $(el).toggleClass('xq-filtered', !has);
             })
           },
           clear: function() {
-            $dd.find( 'li' ).removeClass( 'xq-filtered' );
+            $dd.find( '.dropdown-item' ).removeClass( 'xq-filtered' );
           },
           minCharacter: plugin.settings.characters
         });
@@ -362,7 +349,7 @@ jQuery.fn.extend( {
     var createOption = function($optObj, target) {
       var index = $optObj.index(target + ' option');
       var $ddLink = $( '<a tabindex="' + index + '"></a>' );
-      var css = ($optObj.attr('disabled')) ? 'xq-select-item disabled' : 'xq-select-item';
+      var css = ($optObj.attr('disabled')) ? plugin.settings.cls.option + 'dropdown-item disabled' : plugin.settings.cls.option + ' dropdown-item';
       $ddLink.html( getOptionText( $optObj ) );
       $ddLink
           .attr( 'data-value', $optObj.val() )
@@ -381,7 +368,7 @@ jQuery.fn.extend( {
       }
 
       // Put it together & return it
-      return $('<li></li>').append($ddLink);
+      return $ddLink;
     };
 
     /**
@@ -392,7 +379,7 @@ jQuery.fn.extend( {
      * @returns {*|HTMLElement}     The faux optgroup as a list item with an anchor.
      */
     var createOptGroup = function($grpObj) {
-      return $('<li></li>').addClass( 'optgroup' ).text( $grpObj.attr('label') || plugin.settings.fauxOptionDefault );
+      return $('<div></div>').addClass( 'optgroup' ).text( $grpObj.attr('label') || plugin.settings.fauxOptionDefault );
     };
 
     var getElId = function() {

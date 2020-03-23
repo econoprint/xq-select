@@ -38,6 +38,9 @@
         background-color: $custom-select-bg;
       }
     }
+    &:after {
+      display: none; // Override BS caret, for now
+    }
   }
   > .dropdown-menu {
     // Color the same as select
@@ -56,7 +59,7 @@
     white-space: nowrap;
     // Stay above other items
     z-index: $custom-select-zindex;
-    > li > a {
+    > li > a, .dropdown-item {
       cursor: pointer;
       padding: ($custom-select-padding-y / 2) $custom-select-padding-x;
       &:focus {
@@ -121,10 +124,12 @@
   }
 }
 
-.touch .xq-select-wrapper {
-  > .dropdown-menu {
-    > li > a {
-      padding: $custom-select-padding-y $custom-select-padding-x;
+@media handheld, screen and (pointer:coarse) {
+  .xq-select-wrapper {
+    > .dropdown-menu {
+      > li > a, .dropdown-item {
+        padding: $custom-select-padding-y $custom-select-padding-x;
+      }
     }
   }
 }
