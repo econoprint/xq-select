@@ -171,7 +171,7 @@ jQuery.fn.extend( {
   }
 } );
 /**
- * xqSelect v4.0 (https://github.com/exactquery/xq-select)
+ * xqSelect v4.0.1 (https://github.com/exactquery/xq-select)
  * @author  AMJones [am@jonesiscoding.com]
  * @licence MIT (https://github.com/exactquery/xq-select/blob/master/LICENSE)
  */
@@ -349,7 +349,7 @@ jQuery.fn.extend( {
     var createOption = function($optObj, target) {
       var index = $optObj.index(target + ' option');
       var $ddLink = $( '<a tabindex="' + index + '"></a>' );
-      var css = ($optObj.attr('disabled')) ? plugin.settings.cls.option + 'dropdown-item disabled' : plugin.settings.cls.option + ' dropdown-item';
+      var css = ($optObj.attr('disabled')) ? plugin.settings.cls.option + ' dropdown-item disabled' : plugin.settings.cls.option + ' dropdown-item';
       $ddLink.html( getOptionText( $optObj ) );
       $ddLink
           .attr( 'data-value', $optObj.val() )

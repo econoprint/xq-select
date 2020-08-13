@@ -1,5 +1,5 @@
 /**
- * xqSelect v4.0 (https://github.com/exactquery/xq-select)
+ * xqSelect v4.0.1 (https://github.com/exactquery/xq-select)
  * @author  AMJones [am@jonesiscoding.com]
  * @licence MIT (https://github.com/exactquery/xq-select/blob/master/LICENSE)
  */
