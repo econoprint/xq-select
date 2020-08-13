@@ -177,7 +177,7 @@
     var createOption = function($optObj, target) {
       var index = $optObj.index(target + ' option');
       var $ddLink = $( '<a tabindex="' + index + '"></a>' );
-      var css = ($optObj.attr('disabled')) ? plugin.settings.cls.option + 'dropdown-item disabled' : plugin.settings.cls.option + ' dropdown-item';
+      var css = ($optObj.attr('disabled')) ? plugin.settings.cls.option + ' dropdown-item disabled' : plugin.settings.cls.option + ' dropdown-item';
       $ddLink.html( getOptionText( $optObj ) );
       $ddLink
           .attr( 'data-value', $optObj.val() )
