@@ -23,6 +23,6 @@
     "require": {
         "components/jquery": "^1.10",
         "deviscoding/base": "^2.0",
-        "deviscoding/searchable": "^2.0"
+        "deviscoding/searchable": "^3.0"
     }
 }

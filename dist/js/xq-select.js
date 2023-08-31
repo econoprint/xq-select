@@ -1,3 +1,241 @@
+class SearchInput {
+
+  /**
+   * @typedef CallbackConfig
+   * @param {function(*)} search
+   * @param {function()} clear
+   */
+
+  /** @type HTMLInputElement */
+  el;
+  /** @type {CallbackConfig|object} */
+  callbacks = { search: search => {}, clear: () => {} }
+  /** @type string */
+  currentValue;
+  /** @type int */
+  deferRequestBy = 500;
+  /** @type int */
+  minCharacter = 3;
+  /** @type number */
+  onChangeInterval;
+
+  /** @type {{*: string, ESC: string, TAB: string, LEFT: string, ENTER: string, RIGHT: string, UP: string}} */
+  static keys = {
+    ESC:   'Escape',
+    TAB:   'Tab',
+    ENTER: 'Enter',
+    LEFT:  'ArrowLeft',
+    UP:    'ArrowUp',
+    RIGHT: 'ArrowRight',
+    DOWN:  'ArrowDown'
+  };
+
+  constructor( el, options ) {
+
+    let si = this;
+
+    si.el = el;
+    si.deferRequestBy = options.deferRequestBy || si.deferRequestBy;
+    si.minCharacter = options.minCharacter || si.minCharacter;
+    si.callbacks.search = options.search || si.callbacks.search;
+    si.callbacks.clear = options.clear || si.callbacks.clear;
+
+    // Remove autocomplete attribute to prevent native suggestions
+    // Prevent iOS/Android/Win10 annoyances that alter search terms
+    let attr = { autocomplete: 'off', spellcheck: 'false', autocorrect: 'off', autocapitalize: 'off' };
+    for (let key in attr) {
+      si.el.setAttribute(key, attr[key]);
+    }
+
+    // React to Input on the Input
+    el.addEventListener('keyup', e => si.onKeyUp(e));
+    el.addEventListener('keydown', e => si.onKeyDown(e));
+    el.addEventListener('blur', e => { if(si.currentValue !== el.value) { si.doCallback(); }});
+  };
+
+  get id() {
+    return this.el.id;
+  }
+
+  /**
+   * @param {KeyboardEvent} e
+   */
+  onKeyDown(e) {
+    switch (e.key) {
+      case SearchInput.keys.ESC:
+        this.el.dispatchEvent( 'change' );
+        return;
+      case SearchInput.keys.TAB:
+        if( this.currentValue !== this.el.value ) {  this.callback(); }
+        return;
+      case SearchInput.keys.ENTER:
+        if( this.currentValue !== this.el.value ) {  this.callback(); }
+        break;
+      default:
+        return;
+    }
+
+    // Cancel event if function did not return:
+    e.stopImmediatePropagation();
+    e.preventDefault();
+  };
+
+  /**
+   * @param {KeyboardEvent} e
+   */
+  onKeyUp(e) {
+    let si = this;
+
+    // We don't want to do anything for special keys
+    if(si.isSpecialKey(e.key)) { return; }
+
+    clearInterval(si.onChangeInterval);
+
+    // If any other key, perform the lookup
+    if (si.currentValue !== si.el.value) {
+      if (si.deferRequestBy > 0) {
+        // Defer lookup in case when value changes very quickly:
+        si.onChangeInterval = setInterval(() => si.doCallback(), this.deferRequestBy);
+      } else {
+        si.doCallback();
+      }
+    }
+  };
+
+  /**
+   * @param {string} keyPressed
+   * @returns {boolean}
+   */
+  isSpecialKey(keyPressed) {
+    for(let key in SearchInput.keys) {
+      if ( key === keyPressed ) {
+        return true;
+      }
+    }
+  };
+
+  doCallback() {
+    clearInterval(this.onChangeInterval);
+    this.currentValue = this.el.value;
+    if(this.currentValue.length >= this.minCharacter) {
+      clearInterval(this.onChangeInterval);
+      this.callbacks.search.apply(this, [this.currentValue]);
+    } else if(this.currentValue.length === 0) {
+      this.callbacks.clear.apply(this);
+    }
+  };
+}
+
+
+class AjaxSearch extends SearchInput {
+
+  /**
+   * @typedef CallbackConfig
+   * @param {function(*)} search
+   * @param {function()} clear
+   * @param {function(*)} results
+   * @param {function()} reset
+   */
+
+  cachedResults = {};
+  ajaxUrl;
+  method;
+
+  search(val) {
+    // Hide Suggestions
+    // Reveal Results
+    if ( typeof this.cachedResults[this.currentValue] !== 'undefined') {
+      // Use the cached results
+    } else {
+      // Retrieve New Results
+      this.retrieve(this.ajaxUrl, { query: val, method: this.method, callback: this.callbacks.results })
+    }
+  }
+
+  clear() {
+    clearInterval(this.onChangeInterval);
+    this.el.value = '';
+    this.callbacks.reset.apply(this);
+  }
+
+  /**
+   *
+   * @param url
+   * @param {{ method: string, query: string, callback: function, body: object} }} options
+   */
+  retrieve( url, options ) {
+    let defaults = { headers: { 'Content-Type': 'application/json' }, method: 'get' }
+    Object.assign(defaults, options);
+    if(options.query) {
+      if(options.method == 'post') {
+        options.body = JSON.stringify({ query: options.query });
+      } else {
+        url = url + '?query=' + options.query;
+      }
+    }
+    fetch( url, options )
+        .then( ( response ) => response.json() )
+        .then((data) => options.callback.apply(this, [data]))
+    ;
+  }
+
+  constructor( el, options ) {
+    super( el, options );
+
+    this.ajaxUrl = this.el.form.action;
+    this.method = this.el.form.method;
+    this.callbacks.search = this.search;
+    this.callbacks.clear = this.clear;
+  }
+}
+/**
+ * Searches the given selectors for the given text value, then performs the given 'result' callback on each selector.
+ */
+class DomSearch extends SearchInput {
+
+  /** @type {NodeListOf<HTMLElement>} */
+  targets;
+
+  /**
+   * @param {HTMLElement} el
+   * @param {{ target: string, clear: function, result: function }} options
+   */
+  constructor( el, options ) {
+    super( el, options );
+
+    this.targets = document.querySelectorAll(options.target);
+    this.callbacks.search = this.search;
+    this.callbacks.clear = options.clear || this.callbacks.clear;
+    this.callbacks.result =  options.result || function(node, found) {};
+  };
+
+  /**
+   * Searches each node that matches target selector given at instatitation for the given query string and runs the
+   * result callback given at instantiation indicating whether the
+   *
+   * @param {string} query
+   */
+  search(query) {
+    let ds = this;
+    let q = query.toLowerCase();
+    this.targets.forEach(function(node) {
+      let text = ds.text(node);
+      let found = text && text.indexOf(q) >= 0;
+      // noinspection JSUnresolvedVariable
+      ds.callbacks.result.apply(node, [found])
+    });
+  }
+
+  /**
+   * Retrieves all text in the given HtmlElement
+   * @param elem
+   * @returns {string|null}
+   */
+  text(elem) {
+    let text = (elem.textContent || elem.innerText || "").toLowerCase();
+    return (text.length >= this.minCharacter) ? text : null;
+  };
+}
 /**
  * Configures the given element as a search field, performing the given callbacks on search & clear.
  *
@@ -5,171 +243,19 @@
  */
 ;(function($) {
 
-  $.searchField = function(el, options) {
-
-    var defaults = {
-      minCharacter: 3,
-      deferRequestBy: 500,
-      search: function(search) {},
-      clear: function() {}
-    };
-
-    var keys = {
-      ESC:    27,
-      TAB:    9,
-      RETURN: 13,
-      LEFT:   37,
-      UP:     38,
-      RIGHT:  39,
-      DOWN:   40
-    };
-
-    var sf     = this;
-    var $input = $(el);
-
-    sf.settings = {};
-
-    sf.init = function() {
-
-      sf.settings = $.extend({}, defaults, options);
-      sf.currentValue = $input.val();
-      sf.onChangeInterval = {};
-
-      // Remove autocomplete attribute to prevent native suggestions
-      // Prevent iOS/Android/Win10 annoyances that alter search terms
-      var attr = { autocomplete: 'off', spellcheck: 'false', autocorrect: 'off', autocapitalize: 'off' };
-      $input.attr(attr);
-
-      // React to Input on the Input
-      $input
-          .on('keyup', function (e) { sf.onKeyUp(e); })
-          .on('keydown', function (e) { sf.onKeyDown(e); })
-          .on('blur', function () { if( sf.currentValue !== $input.val() ) {  sf.doCallback(); } })
-          .on('change', function () { if( sf.currentValue !== $input.val() ) {  sf.doCallback(); } })
-      ;
-    };
-
-    sf.onKeyDown = function(e) {
-      var keyPressed = e.which;
-
-      switch (keyPressed) {
-        case keys.ESC:
-          $input.val('').trigger('change');
-          return;
-        case keys.TAB:
-          if( sf.currentValue !== $input.val() ) {  sf.doCallback(); }
-          return;
-        case keys.RETURN:
-          if( sf.currentValue !== $input.val() ) {  sf.doCallback(); }
-          break;
-        default:
-          return;
-      }
-
-      // Cancel event if function did not return:
-      e.stopImmediatePropagation();
-      e.preventDefault();
-    };
-
-    /**
-     * Called when a key is released while the search box is in focus.
-     *
-     * @param e       The event that triggered this.
-     */
-    sf.onKeyUp = function(e) {
-      var keyPressed = e.which;
-
-      // We don't want to do anything for special keys
-      if(sf.isSpecialKey(keyPressed)) { return; }
-
-      clearInterval(sf.onChangeInterval);
-
-      // If any other key, perform the lookup
-      if (sf.currentValue !== $input.val()) {
-        if (sf.settings.deferRequestBy > 0) {
-          // Defer lookup in case when value changes very quickly:
-          sf.onChangeInterval = setInterval(function () {
-            sf.doCallback();
-          }, sf.settings.deferRequestBy);
-        } else {
-          sf.doCallback();
-        }
-      }
-    };
-
-    sf.isSpecialKey = function(keyPressed) {
-      var retval = false;
-      $.each( keys, function( key, value ) {
-        retval = retval || (value === keyPressed);
-      });
-
-      return retval;
-    };
-
-    sf.doCallback = function() {
-      clearInterval(sf.onChangeInterval);
-      sf.currentValue = $input.val();
-      if(sf.currentValue.length >= sf.settings.minCharacter) {
-        clearInterval(sf.onChangeInterval);
-        sf.settings.search(sf.currentValue);
-
-      } else if(sf.currentValue.length === 0) {
-        sf.settings.clear();
-      }
-    };
-
-    sf.init();
-
-  };
-
   /**
    * @param   {object} options
    * @returns {jQuery}
    */
   $.fn.searchField = function(options) {
     return this.each(function() {
-      if (undefined === $(this).data('search-field')) {
-        var sf = new $.searchField(this, options);
+      if (undefined === $(this).data('search-input')) {
+        let sf = new SearchInput(this, options);
         $(this).data('search-field', sf);
       }
     });
   }
 })(jQuery);
-
-/**
- * Searches the given selector for the given text value, then performs the given callback.
- *
- * @returns {jQuery}
- */
-jQuery.fn.extend( {
-  domSearch: function ( sel, value, callback ) {
-    var ds = this;
-
-    ds.value    = value;
-    ds.settings = { minCharacter: 2 };
-
-    ds.hasSearch = function(elem) {
-      var retval = false;
-      $(elem).contents().each(function() {
-        var text = ds.getText(this);
-        if(text && text.indexOf(ds.value.toLowerCase()) >= 0) {
-          retval = true;
-        }
-      });
-
-      return retval;
-    };
-
-    ds.getText = function(elem) {
-      var text = (elem.textContent || elem.innerText || $(elem).text() || "").toLowerCase();
-      return (text.length >= ds.settings.minCharacter) ? text : null;
-    };
-
-    $(sel).each(function() {
-      callback(this,ds.hasSearch(this));
-    });
-  }
-} );
 /**
  * xqSelect v4.0.1 (https://github.com/exactquery/xq-select)
  * @author  AMJones [am@jonesiscoding.com]
