@@ -131,11 +131,15 @@
       if(plugin.settings.filter) {
         var $sb = $('<input type="text" class="xq-filter" tabindex="-1" placeholder="Type to Filter" />');
         var $dd = plugin.$el.parent(plugin.sel.wrapper).find(plugin.sel.dropdown);
+        var target = '#' + plugin.$el.prop('id') + ' ~ ' + plugin.sel.dropdown + ' >  .dropdown-item';
         $sb.searchField({
           search: function(q) {
-            $.fn.domSearch($dd.find('.dropdown-item'),q,function(el,has) {
-              $(el).toggleClass('xq-filtered', !has);
-            })
+            var ds = new DomSearch($dd[0],{
+              result: function(has) { $(this).toggleClass('xq-filtered', !has); },
+              target: target,
+            });
+
+            ds.search(q);
           },
           clear: function() {
             $dd.find( '.dropdown-item' ).removeClass( 'xq-filtered' );
