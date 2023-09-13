@@ -319,6 +319,7 @@ class DomSearch extends SearchInput {
         $target.val($obj.attr('data-value'));
         $dropdown.find(plugin.sel.option).removeClass('selected');
         $obj.addClass('selected');
+        $target.trigger('blur');
         $target.trigger('change');
       }
       $dropdown.prev( plugin.sel.toggle ).focus();
