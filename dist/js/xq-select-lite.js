@@ -61,6 +61,7 @@
         $target.val($obj.attr('data-value'));
         $dropdown.find(plugin.sel.option).removeClass('selected');
         $obj.addClass('selected');
+        $target.focus();
         $target.trigger('blur');
         $target.trigger('change');
       }
